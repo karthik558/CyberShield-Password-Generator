@@ -20,6 +20,6 @@ Contributions are always welcome with some basic rules such as (use good commit-
 ### STEP 2 
 #### ⇒ Using an online compiler
 - `just click on the bottom URL() and run the code (easy)` <br>
-<a href="https://onlinegdb.com/nuVKsL1IU"> PASSWORD GENERATOR</a>
+<a href="https://onlinegdb.com/Nm_SbrQ6C"> PASSWORD GENERATOR</a>
 
 #### STAR THIS REPOSITORY IF YOU LIKE MY WORK ⭐
