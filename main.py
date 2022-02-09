@@ -1,10 +1,10 @@
+from optparse import AmbiguousOptionError
 import random
 
 uppercase_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
 lowercase_letters = uppercase_letters.lower()
 digits = "0123456789"
-symbols = ",./;'[]{}()*&%$#@!\\?-+ "
+symbols = ",./;'[]{}()*&%$#@!\\?-+_ "
 
 upper, lower, nums, syms = True, True, True, True
 
@@ -19,9 +19,9 @@ if nums:
 if syms: 
     all += symbols
 
-length = 20
 amount = 10
 
 for x in range(amount):
-    password = "".join(random.sample(all, length))
-    print(password)
+    length_password = int(input("Enter the length of the password : "))
+    password = "".join(random.sample(all, length_password))
+    print(f"Your password is {password}")
