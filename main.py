@@ -24,4 +24,4 @@ amount = 10
 for x in range(amount):
     length_password = int(input("Enter the length of the password : "))
     password = "".join(random.sample(all, length_password))
-    print(f"Your password is {password}")
+    print(f"Your password is : {password}")
