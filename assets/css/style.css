@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;550;600;700&display=swap");
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    background-color: #130f1c;
+    color: #fff;
+}
+
+h1 {
+    text-transform: uppercase;
+    padding-top: 100px;
+    font-size: 30px;
+    font-weight: 600;
+    color: #dbd8e3;
+}
+
+h1 span {
+    color: #dbdbdb;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right,
+            rgb(200, 2, 2),
+            rgb(221, 144, 0),
+            rgb(0, 201, 0));
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #dbd8e3;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="range"]::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#passwordLengthText {
+    font-size: 20px;
+    font-weight: 600;
+    color: #dbd8e3;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+}
+
+.form-check-label {
+    margin-left: 10px;
+}
+
+.form-check-input:checked {
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.form-check-input:checked::before {
+    color: #005cc8;
+}
+
+.form-check-input:checked::after {
+    color: rgb(17, 157, 17);
+}
+
+#generateButton {
+    margin-right: 10px;
+    background-color: #352f44;
+    border: 1.5px solid #352f44;
+    font-weight: 500;
+}
+
+#generateButton:hover {
+    background-color: #5c5470;
+    color: #fff;
+}
+
+#copyButton {
+    background-color: #181423;
+    border: 1.5px solid #dbd8e3;
+    font-weight: 500;
+    color: #fff;
+}
+
+#copyButton:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+#password {
+    font-size: 22px;
+    background-color: #181423;
+    color: #fff;
+    font-weight: 500;
+    border: 1.5px solid #dbd8e3;
+}
+
+.st-copyright-text {
+    text-align: center;
+    padding-top: 1rem;
+    color: #dbd8e3;
+}
+
+.st-copyright-text a {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+.st-copyright-text a:hover {
+    color: #dbd8e3;
+}
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #130f1c;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lock-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 5px solid white;
+    border-top-color: transparent;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

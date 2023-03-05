@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Generator - Generate Secure Passwords Online</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-tROA4n4JiGy4vSDV7lL8XmdoVZ51Ob3n0aBU1G03fFb5i5H5e1v5VnEoCIfRglivno2SPD1wcn0ihrNHoymlfA=="
+        crossorigin="anonymous" />
+    <!-- Favicon Icon -->
+    <link rel="icon" href="assets/img/favi-icon/favi-lock.png" />
+    <!-- Meta & SEO Tags -->
+    <meta name="description" content="Create a strong and secure password using our online password generator tool. Customize your password length and choose from uppercase, lowercase, numbers, and symbols for added security.">
+    <meta name="keywords" content="password, generator, secure, online, tool">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="lock-icon">
+            <i class="fas fa-lock"></i>
+        </div>
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader -->
+
+    <div class="container">
+        <h1 class="text-center mb-5">
+            <span style="color: rgba(200, 2, 2, 0.53)">&lt</span> Password
+            <span>Generator </span><span style="color: rgba(241, 157, 0, 0.53)">/</span><span
+                style="color: rgba(90, 201, 0, 0.53)">&gt</span>
+        </h1>
+
+        <div class="form-group">
+            <label for="passwordLength">Password Length: <span id="passwordLengthText">8</span></label>
+            <input type="range" class="form-control-range" id="passwordLength" min="8" max="128" value="8" />
+        </div>
+
+        <div class="form-group">
+            <label>Character Types:</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="uppercaseCheckbox" checked />
+                <label class="form-check-label" for="uppercaseCheckbox">
+                    Uppercase
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="lowercaseCheckbox" checked />
+                <label class="form-check-label" for="lowercaseCheckbox">
+                    Lowercase
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="numbersCheckbox" checked />
+                <label class="form-check-label" for="numbersCheckbox">
+                    Numbers
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="symbolsCheckbox" checked />
+                <label class="form-check-label" for="symbolsCheckbox">
+                    Symbols
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="button" id="generateButton" class="btn btn-primary">
+                Generate Password
+            </button>
+            <button type="button" id="copyButton" class="btn btn-secondary">
+                Copy Password
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Your Password:</label>
+            <input type="text" class="form-control" id="password" readonly />
+        </div>
+    </div>
+
+    <!-- Start Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="st-copyright-wrap text-center">
+                <div class="st-copyright-text">
+                    © 2023. Designed & Developed by
+                    <a href="https://karthiklal.live">Karthik Lal</a>. All right
+                    reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer Section -->
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/jquery-1.12.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</body>
+</html>
