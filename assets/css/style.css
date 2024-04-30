@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;550;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 body {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
-    background-color: #130f1c;
-    color: #fff;
+    background-color: #1a1a1a; /* Darker background */
+    color: #e0e0e0; /* Light text color */
 }
 
 h1 {
@@ -12,11 +12,21 @@ h1 {
     padding-top: 100px;
     font-size: 30px;
     font-weight: 600;
-    color: #dbd8e3;
+    color: #bdbdbd; /* Light gray heading color */
 }
 
 h1 span {
-    color: #dbdbdb;
+    color: #9e9e9e; /* Lighter gray span color */
+}
+
+h3 {
+    font-size: 15px;
+    font-weight: 400;    
+    color: #bdbdbd; /* Light gray heading color */    
+}
+
+h3 span {
+    font-weight: 600;
 }
 
 input[type="range"] {
@@ -25,39 +35,27 @@ input[type="range"] {
     height: 10px;
     border-radius: 5px;
     background: linear-gradient(to right,
-            rgb(200, 2, 2),
-            rgb(221, 144, 0),
-            rgb(0, 201, 0));
+            #ff5252, /* Material red */
+            #ffab40, /* Material orange */
+            #69f0ae); /* Material green */
 }
 
-input[type="range"]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb,
+input[type="range"]::-moz-range-thumb,
+input[type="range"]::-ms-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #dbd8e3;
-    cursor: pointer;
-}
-
-input[type="range"]::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-input[type="range"]::-ms-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    background-color: #bdbdbd; /* Light gray thumb color */
     cursor: pointer;
 }
 
 #passwordLengthText {
     font-size: 20px;
     font-weight: 600;
-    color: #dbd8e3;
+    color: #bdbdbd; /* Light gray text color */
 }
 
 .container {
@@ -70,68 +68,68 @@ input[type="range"]::-ms-thumb {
 }
 
 .form-check-input:checked {
-    background-color: #fff;
-    border-color: #fff;
+    background-color: #424242; /* Darker background for checked input */
+    border-color: #424242;
 }
 
 .form-check-input:checked::before {
-    color: #005cc8;
+    color: #ff5252; /* Material red for checked input */
 }
 
 .form-check-input:checked::after {
-    color: rgb(17, 157, 17);
+    color: #69f0ae; /* Material green for checked input */
 }
 
-#generateButton {
-    margin-right: 10px;
-    background-color: #352f44;
-    border: 1.5px solid #352f44;
+.button {
+    background-color: #424242; /* Darker background for buttons */
+    color: #e0e0e0; /* Light text color for buttons */
     font-weight: 500;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
-#generateButton:hover {
-    background-color: #5c5470;
-    color: #fff;
+.button:hover {
+    background-color: #616161; /* Darker background on hover */
 }
 
 #copyButton {
-    background-color: #181423;
-    border: 1.5px solid #dbd8e3;
-    font-weight: 500;
-    color: #fff;
+    background-color: #ff5252; /* Material red for copy button */
 }
 
 #copyButton:hover {
-    background-color: #fff;
-    color: #000;
+    background-color: #ff1744; /* Darker red on hover */
 }
 
 #password {
     font-size: 22px;
-    background-color: #181423;
-    color: #fff;
+    background-color: #333333; /* Darker background for password field */
+    color: #e0e0e0;
     font-weight: 500;
-    border: 1.5px solid #dbd8e3;
+    border: 1.5px solid #bdbdbd;
+    padding: 10px;
+    border-radius: 4px;
 }
 
 .st-copyright-text {
     text-align: center;
     padding-top: 1rem;
-    color: #dbd8e3;
+    color: #bdbdbd;
 }
 
 .st-copyright-text a {
     text-transform: uppercase;
     font-size: 16px;
     font-weight: 500;
-    color: #fff;
+    color: #e0e0e0;
     text-decoration: none;
-    -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
 }
 
 .st-copyright-text a:hover {
-    color: #dbd8e3;
+    color: #bdbdbd;
 }
 
 .preloader {
@@ -140,7 +138,7 @@ input[type="range"]::-ms-thumb {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #130f1c;
+    background-color: #1a1a1a;
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -151,14 +149,14 @@ input[type="range"]::-ms-thumb {
     position: absolute;
     top: 20px;
     left: 20px;
-    color: white;
+    color: #e0e0e0;
 }
 
 .spinner {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 5px solid white;
+    border: 5px solid #e0e0e0;
     border-top-color: transparent;
     animation: spin 1s ease-in-out infinite;
 }
@@ -167,4 +165,54 @@ input[type="range"]::-ms-thumb {
     to {
         transform: rotate(360deg);
     }
+}
+
+.btn-primary {
+    background-color: #3f3f3f;
+    border-color: #e0e0e0;    
+}
+
+.btn-primary:hover {
+    background-color: #e0e0e0;
+    color: #3f3f3f;
+}
+
+/* Responsive styles */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    h3 {
+        font-size: 15px;
+    }
+
+    #passwordLengthText {
+        font-size: 16px;
+    }
+
+    .button {
+        padding: 6px 12px;
+    }
+
+    #password {
+        font-size: 18px;
+    }
+
+    .st-copyright-text {
+        font-size: 14px;
+    }
+}
+
+.st-copyright-text a {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 500;    
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: all 0.4s ease;
+}
+
+.st-copyright-text a:hover {
+    color: #9e9e9e
 }

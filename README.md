@@ -1,4 +1,4 @@
-# <b> Password Generator </b>
+# <b> CyberShield </b> (Password Generator) 
 
 ![Password Generator](assets/img/docs-img/secure.png)
 
@@ -22,7 +22,7 @@ A secure and user-friendly password generator tool that helps you generate stron
 
 ## <b> Installation </b>
 
-To use the Password Generator Tool, simply visit the [Password Generator website](https://password-generator-karthik.netlify.app/) and follow the instructions to generate a new password. 
+To use the Password Generator Tool, simply visit the [Password Generator website](https://passgen.karthiklal.in) and follow the instructions to generate a new password. 
 
 If you want to run the Password Generator Tool locally, follow these steps:
 
@@ -34,7 +34,7 @@ If you want to run the Password Generator Tool locally, follow these steps:
 
 To generate a password using the Password Generator Tool, follow these steps:
 
-1. Go to the [Password Generator website](https://password-generator-karthik.netlify.app/)
+1. Go to the [Password Generator website](https://passgen.karthiklal.in)
 2. Select the options for your desired password (uppercase letters, lowercase letters, numbers, and special characters)
 3. Use the slider to select the length of your desired password (between 8 and 128 characters)
 4. Click on the "Generate Password" button to generate a new password
