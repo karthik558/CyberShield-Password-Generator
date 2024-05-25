@@ -1,131 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberShield | Password Generator</title>
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>CyberShield | Password Generator</title>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="assets/css/style.css" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
-            rel="stylesheet" />
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
-            integrity="sha512-tROA4n4JiGy4vSDV7lL8XmdoVZ51Ob3n0aBU1G03fFb5i5H5e1v5VnEoCIfRglivno2SPD1wcn0ihrNHoymlfA=="
-            crossorigin="anonymous" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
 
-        <!-- Favicon Icon -->
-        <link rel="icon" href="assets/img/favi-icon/favi-lock.png" />
+    <!-- Font CSS -->
+    <link rel="stylesheet" href="/assets/css/poppins.font.css" />
 
-        <!-- Meta & SEO Tags -->
-        <meta name="description"
-            content="Generate strong and secure passwords with our online tool. Customize password length and include uppercase, lowercase, numbers, and symbols for enhanced security.">
-        <meta name="keywords"
-            content="password, generator, secure, online, tool, strong password, password security, password strength">
-    </head>
+    <!-- Favicon Icon -->
+    <link rel="icon" href="assets/img/favi-icon/favi-lock.png" />
 
-    <body>
-        <!-- Preloader -->
-        <div class="preloader">
-            <div class="lock-icon">
-                <i class="fas fa-lock"></i>
-            </div>
-            <div class="spinner"></div>
+    <!-- Meta & SEO Tags -->
+    <meta
+      name="description"
+      content="Generate strong and secure passwords with our online tool. Customize password length and include uppercase, lowercase, numbers, and symbols for enhanced security."
+    />
+    <meta
+      name="keywords"
+      content="password, generator, secure, online, tool, strong password, password security, password strength"
+    />
+  </head>
+
+  <body>
+    <!-- Preloader -->
+    <div class="preloader">
+      <div class="lock-icon">
+        <i class="fas fa-lock"></i>
+      </div>
+      <div class="spinner"></div>
+    </div>
+    <!-- End Preloader -->
+
+    <div class="container">
+      <h1 class="text-center mb-5">PASSWORD GENERATOR</h1>
+      <h3 class="text-center mb-5">
+        Elevate your online security with <span>CyberShield</span> - a powerful
+        password generator that creates robust, customizable passwords to
+        safeguard your digital life.
+      </h3>
+      <div class="form-group">
+        <label for="passwordLength"
+          >Password Length: <span id="passwordLengthText">12</span></label
+        >
+        <input
+          type="range"
+          class="form-control-range"
+          id="passwordLength"
+          min="8"
+          max="128"
+          value="12"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Character Types:</label>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="uppercaseCheckbox"
+            checked
+          />
+          <label class="form-check-label" for="uppercaseCheckbox">
+            Uppercase
+          </label>
         </div>
-        <!-- End Preloader -->
-
-        <div class="container">
-            <h1 class="text-center mb-5">
-                PASSWORD GENERATOR
-            </h1>
-            <h3 class="text-center mb-5">
-                Elevate your online security with <span>CyberShield</span> - a
-                powerful password generator that creates robust, customizable
-                passwords to safeguard your digital life.
-            </h3>
-            <div class="form-group">
-                <label for="passwordLength">Password Length: <span
-                        id="passwordLengthText">12</span></label>
-                <input type="range" class="form-control-range"
-                    id="passwordLength" min="8" max="128" value="12" />
-            </div>
-
-            <div class="form-group">
-                <label>Character Types:</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox"
-                        id="uppercaseCheckbox" checked />
-                    <label class="form-check-label" for="uppercaseCheckbox">
-                        Uppercase
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox"
-                        id="lowercaseCheckbox" checked />
-                    <label class="form-check-label" for="lowercaseCheckbox">
-                        Lowercase
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox"
-                        id="numbersCheckbox" />
-                    <label class="form-check-label" for="numbersCheckbox">
-                        Numbers
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox"
-                        id="symbolsCheckbox" />
-                    <label class="form-check-label" for="symbolsCheckbox">
-                        Symbols
-                    </label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <button type="button" id="generateButton"
-                    class="btn btn-primary">
-                    Generate Password
-                </button>
-                <button type="button" id="copyButton" class="btn btn-secondary">
-                    Copy Password
-                </button>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Your Password:</label>
-                <input type="text" class="form-control" id="password"
-                    readonly />
-            </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="lowercaseCheckbox"
+            checked
+          />
+          <label class="form-check-label" for="lowercaseCheckbox">
+            Lowercase
+          </label>
         </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="numbersCheckbox"
+          />
+          <label class="form-check-label" for="numbersCheckbox">
+            Numbers
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="symbolsCheckbox"
+          />
+          <label class="form-check-label" for="symbolsCheckbox">
+            Symbols
+          </label>
+        </div>
+      </div>
 
-        <!-- Start Footer Section -->
-        <footer>
-            <div class="container">
-                <div class="st-copyright-wrap text-center">
-                    <div class="st-copyright-text">
-                        © 2024. Designed & Developed by
-                        <a href="https://karthiklal.in">Karthik Lal</a>.
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- End Footer Section -->
+      <div class="form-group">
+        <button type="button" id="generateButton" class="btn btn-primary">
+          Generate Password
+        </button>
+        <button type="button" id="copyButton" class="btn btn-secondary">
+          Copy Password
+        </button>
+      </div>
 
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script src="assets/js/script.js"></script>
-        <script src="assets/js/block.js"></script>
-        <script src="assets/js/jquery-1.12.4.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>        
-    </body>
+      <div class="form-group">
+        <label for="password">Your Password:</label>
+        <input type="text" class="form-control" id="password" readonly />
+      </div>
+    </div>
+
+    <!-- Start Footer Section -->
+    <footer>
+      <div class="container">
+        <div class="st-copyright-wrap text-center">
+          <div class="st-copyright-text">
+            © 2024. Designed & Developed by
+            <a href="https://karthiklal.in">Karthik Lal</a>.
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer Section -->
+
+    <!-- JQuery + JS Scripts -->
+    <script src="assets/js/jquery-3.7.1.slim.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/block.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
 </html>

@@ -1,218 +1,220 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 body {
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    background-color: #1a1a1a; /* Darker background */
-    color: #e0e0e0; /* Light text color */
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  background-color: #1a1a1a; /* Darker background */
+  color: #e0e0e0; /* Light text color */
 }
 
 h1 {
-    text-transform: uppercase;
-    padding-top: 100px;
-    font-size: 30px;
-    font-weight: 600;
-    color: #bdbdbd; /* Light gray heading color */
+  text-transform: uppercase;
+  padding-top: 100px;
+  font-size: 30px;
+  font-weight: 600;
+  color: #bdbdbd; /* Light gray heading color */
 }
 
 h1 span {
-    color: #9e9e9e; /* Lighter gray span color */
+  color: #9e9e9e; /* Lighter gray span color */
 }
 
 h3 {
-    font-size: 15px;
-    font-weight: 400;    
-    color: #bdbdbd; /* Light gray heading color */    
+  font-size: 15px;
+  font-weight: 400;
+  color: #bdbdbd; /* Light gray heading color */
 }
 
 h3 span {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 input[type="range"] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 10px;
-    border-radius: 5px;
-    background: linear-gradient(to right,
-            #ff5252, /* Material red */
-            #ffab40, /* Material orange */
-            #69f0ae); /* Material green */
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(
+    to right,
+    #ff5252,
+    /* Material red */ #ffab40,
+    /* Material orange */ #69f0ae
+  ); /* Material green */
 }
 
 input[type="range"]::-webkit-slider-thumb,
 input[type="range"]::-moz-range-thumb,
 input[type="range"]::-ms-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #bdbdbd; /* Light gray thumb color */
-    cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #bdbdbd; /* Light gray thumb color */
+  cursor: pointer;
 }
 
 #passwordLengthText {
-    font-size: 20px;
-    font-weight: 600;
-    color: #bdbdbd; /* Light gray text color */
+  font-size: 20px;
+  font-weight: 600;
+  color: #bdbdbd; /* Light gray text color */
 }
 
 .container {
-    max-width: 500px;
-    margin: auto;
+  max-width: 500px;
+  margin: auto;
 }
 
 .form-check-label {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .form-check-input:checked {
-    background-color: #424242; /* Darker background for checked input */
-    border-color: #424242;
+  background-color: #424242; /* Darker background for checked input */
+  border-color: #424242;
 }
 
 .form-check-input:checked::before {
-    color: #ff5252; /* Material red for checked input */
+  color: #ff5252; /* Material red for checked input */
 }
 
 .form-check-input:checked::after {
-    color: #69f0ae; /* Material green for checked input */
+  color: #69f0ae; /* Material green for checked input */
 }
 
 .button {
-    background-color: #424242; /* Darker background for buttons */
-    color: #e0e0e0; /* Light text color for buttons */
-    font-weight: 500;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
+  background-color: #424242; /* Darker background for buttons */
+  color: #e0e0e0; /* Light text color for buttons */
+  font-weight: 500;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
 .button:hover {
-    background-color: #616161; /* Darker background on hover */
+  background-color: #616161; /* Darker background on hover */
 }
 
 #copyButton {
-    background-color: #ff5252; /* Material red for copy button */
+  background-color: #ff5252; /* Material red for copy button */
 }
 
 #copyButton:hover {
-    background-color: #ff1744; /* Darker red on hover */
+  background-color: #ff1744; /* Darker red on hover */
 }
 
 #password {
-    font-size: 22px;
-    background-color: #333333; /* Darker background for password field */
-    color: #e0e0e0;
-    font-weight: 500;
-    border: 1.5px solid #bdbdbd;
-    padding: 10px;
-    border-radius: 4px;
+  font-size: 22px;
+  background-color: #333333; /* Darker background for password field */
+  color: #e0e0e0;
+  font-weight: 500;
+  border: 1.5px solid #bdbdbd;
+  padding: 10px;
+  border-radius: 4px;
 }
 
 .st-copyright-text {
-    text-align: center;
-    padding-top: 1rem;
-    color: #bdbdbd;
+  text-align: center;
+  padding-top: 1rem;
+  color: #bdbdbd;
 }
 
 .st-copyright-text a {
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 500;
-    color: #e0e0e0;
-    text-decoration: none;
-    transition: all 0.4s ease;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 500;
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: all 0.4s ease;
 }
 
 .st-copyright-text a:hover {
-    color: #bdbdbd;
+  color: #bdbdbd;
 }
 
 .preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #1a1a1a;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #1a1a1a;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .lock-icon {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: #e0e0e0;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #e0e0e0;
 }
 
 .spinner {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 5px solid #e0e0e0;
-    border-top-color: transparent;
-    animation: spin 1s ease-in-out infinite;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 5px solid #e0e0e0;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .btn-primary {
-    background-color: #3f3f3f;
-    border-color: #e0e0e0;    
+  background-color: #3f3f3f;
+  border-color: #e0e0e0;
 }
 
 .btn-primary:hover {
-    background-color: #e0e0e0;
-    color: #3f3f3f;
+  background-color: #e0e0e0;
+  color: #3f3f3f;
 }
 
 /* Responsive styles */
 @media (max-width: 576px) {
-    h1 {
-        font-size: 30px;
-    }
+  h1 {
+    font-size: 30px;
+  }
 
-    h3 {
-        font-size: 15px;
-    }
+  h3 {
+    font-size: 15px;
+  }
 
-    #passwordLengthText {
-        font-size: 16px;
-    }
+  #passwordLengthText {
+    font-size: 16px;
+  }
 
-    .button {
-        padding: 6px 12px;
-    }
+  .button {
+    padding: 6px 12px;
+  }
 
-    #password {
-        font-size: 18px;
-    }
+  #password {
+    font-size: 18px;
+  }
 
-    .st-copyright-text {
-        font-size: 14px;
-    }
+  .st-copyright-text {
+    font-size: 14px;
+  }
 }
 
 .st-copyright-text a {
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 500;    
-    color: #e0e0e0;
-    text-decoration: none;
-    transition: all 0.4s ease;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 500;
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: all 0.4s ease;
 }
 
 .st-copyright-text a:hover {
-    color: #9e9e9e
+  color: #9e9e9e;
 }

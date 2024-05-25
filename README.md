@@ -1,4 +1,4 @@
-# <b> CyberShield </b> (Password Generator) 
+# <b> CyberShield </b> (Password Generator)
 
 ![Password Generator](assets/img/docs-img/secure.png)
 
@@ -22,7 +22,7 @@ A secure and user-friendly password generator tool that helps you generate stron
 
 ## <b> Installation </b>
 
-To use the Password Generator Tool, simply visit the [Password Generator website](https://passgen.karthiklal.in) and follow the instructions to generate a new password. 
+To use the Password Generator Tool, simply visit the [Password Generator website](https://passgen.karthiklal.in) and follow the instructions to generate a new password.
 
 If you want to run the Password Generator Tool locally, follow these steps:
 
