@@ -1,57 +1,164 @@
-# <b> CyberShield </b> (Password Generator) 
+<div align="center">
+<img src="assets/img/favi-icon/favi-lock.png" alt="CyberShield Logo" width="200"/>
+  <h1>🔒 CyberShield</h1>
+  <p><strong>Advanced Password Generator & Security Tool</strong></p>
 
-![Password Generator](assets/img/docs-img/secure.png)
+![License](https://img.shields.io/github/license/karthik558/password-generator)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fpassgen.karthiklal.in)](https://passgen.karthiklal.in)
 
-## <b> Overview </b>
+  <p align="center">
+    <a href="#✨-features">Features</a> •
+    <a href="#🚀-live-demo">Live Demo</a> •
+    <a href="#💻-installation">Installation</a> •
+    <a href="#🛠️-usage">Usage</a> •
+    <a href="#🤝-contributing">Contributing</a>
+  </p>
 
-A secure and user-friendly password generator tool that helps you generate strong passwords for your online accounts. It allows you to customize your passwords by selecting options for uppercase letters, lowercase letters, numbers, and special characters. You can also choose the length of the password (between 8 and 128 characters) to create a unique and complex password that meets your requirements.
+  <img src="assets/img/screenshot-docs/pc-1.png" alt="CyberShield Screenshot" width="800"/>
 
-### <b> Features </b>
+  <img src="assets/img/screenshot-docs/pc-2.png" alt="CyberShield Screenshot" width="400"/>
 
-- Customizable options for generating passwords (uppercase letters, lowercase letters, numbers, and special characters)
-- Ability to set password length between 8 and 128 characters
-- Secure password generation algorithm that creates unique and complex passwords
-- User-friendly interface that makes it easy to generate passwords quickly
-- Cross-browser compatibility (works on all modern browsers)
+  <img src="assets/img/screenshot-docs/pc-3.png" alt="CyberShield Screenshot" width="400"/>
+ 
+</div>
 
-### <b> Screenshots </b>
+## ✨ Features
 
-![Password Generator Screenshot 1](assets/img/screenshot-docs/pc-1.png)
+- 🔐 **Advanced Security**
 
-![Password Generator Screenshot 2](assets/img/screenshot-docs/pc-2.png)
+  - Cryptographically secure random number generation
+  - Multiple character sets for enhanced complexity
+  - Password strength assessment in real-time
 
-## <b> Installation </b>
+- 🎨 **Modern Interface**
 
-To use the Password Generator Tool, simply visit the [Password Generator website](https://passgen.karthiklal.in) and follow the instructions to generate a new password. 
+  - Clean, intuitive user interface
+  - Dark/Light theme support
+  - Responsive design for all devices
 
-If you want to run the Password Generator Tool locally, follow these steps:
+- ⚙️ **Customization Options**
 
-1. Clone the repository by running `git clone https://github.com/karthik558/password-generator.git` in your terminal
-2. Navigate to the project directory by running `cd password-generator`
-3. Open the `index.html` file in your preferred web browser
+  - Password length (8-128 characters)
+  - Character type selection
+    - Uppercase letters (A-Z)
+    - Lowercase letters (a-z)
+    - Numbers (0-9)
+    - Special characters (!@#$%^&\*)
+  - Exclude ambiguous characters
+  - Avoid character repetition
 
-## <b> Usage </b>
+- 🔄 **Additional Features**
+  - One-click copy to clipboard
+  - Password strength indicator
+  - Security recommendations
+  - Cross-browser compatibility
 
-To generate a password using the Password Generator Tool, follow these steps:
+## 🚀 Live Demo
 
-1. Go to the [Password Generator website](https://passgen.karthiklal.in)
-2. Select the options for your desired password (uppercase letters, lowercase letters, numbers, and special characters)
-3. Use the slider to select the length of your desired password (between 8 and 128 characters)
-4. Click on the "Generate Password" button to generate a new password
-5. Copy the generated password and use it for your account
+Experience CyberShield in action: [https://passgen.karthiklal.in](https://passgen.karthiklal.in)
 
-## <b> Contributing </b>
+## 💻 Installation
 
-Contributions to the Password Generator Tool are welcome and appreciated. To contribute to the project, please follow these steps:
+### Quick Start
 
-1. Fork the repository by clicking on the "Fork" button in the top-right corner of the repository page
-2. Clone your fork of the repository by running `git clone https://github.com/yourusername/password-generator.git`
-3. Create a new branch for your feature or bug fix by running `git checkout -b my-new-feature`
-4. Make changes to the code and test your changes locally
-5. Commit your changes by running `git commit -am 'Add some feature'`
-6. Push your changes to your fork of the repository by running `git push origin my-new-feature`
-7. Create a new pull request by going to the repository page on GitHub and clicking on the "New pull request" button
+```bash
+# Clone the repository
+git clone https://github.com/karthik558/CyberShield-Password-Generator.git
 
-## <b> License </b>
+# Navigate to project directory
+cd CyberShield-Password-Generator
 
-The Password Generator Tool is open source software licensed under the MIT license. See the [LICENSE](LICENSE) file for more information.
+# Open in browser
+# For Linux/macOS
+open index.html
+
+# For Windows
+start index.html
+```
+
+## 🛠️ Usage
+
+1. **Access the Generator**
+
+   - Visit [https://passgen.karthiklal.in](https://passgen.karthiklal.in)
+   - Or open `index.html` locally
+
+2. **Configure Password Settings**
+
+   - Set desired password length using the slider
+   - Select character types to include
+   - Enable/disable additional options
+
+3. **Generate & Copy**
+   - Click "Generate Password"
+   - Use the copy button to copy to clipboard
+   - Check password strength indicator
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+1. **Fork the Repository**
+
+   ```bash
+   git clone https://github.com/yourusername/CyberShield-Password-Generator.git
+   ```
+
+2. **Create a Branch**
+
+   ```bash
+   git checkout -b feature/SecurityRecommendations
+   ```
+
+3. **Make Changes**
+
+   - Write clean, documented code
+   - Follow existing code style
+   - Add tests if applicable
+
+4. **Test Your Changes**
+
+   - Ensure the generator functions as expected
+   - Verify the password strength indicator
+
+5. **Submit a Pull Request**
+   - Describe your changes in detail
+   - Link any related issues
+
+## 📝 License
+
+Licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🌟 Acknowledgments
+
+- Icons by [Bootstrap Icons](https://icons.getbootstrap.com/)
+- Font by [Google Fonts](https://fonts.google.com/)
+- Inspired by modern security practices
+
+## 📊 Project Status
+
+<div align="center">
+
+**Current Version: 3.0.0**
+
+| Feature           | Status |
+| ----------------- | ------ |
+| Core Generator    | ✅     |
+| Password Strength | ✅     |
+| Dark Mode         | ✅     |
+| Mobile Support    | ✅     |
+| PWA Support       | 🚧     |
+| Browser Extension | 📅     |
+
+</div>
+
+---
+
+<div align="center">
+  
+**⭐ Star us on GitHub — it motivates me a lot!**
+
+[Report Bug](https://github.com/karthik558/password-generator/issues) •
+[Request Feature](https://github.com/karthik558/password-generator/issues)
+
+</div>
