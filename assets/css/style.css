@@ -1,218 +1,501 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+:root {
+  /* Light theme */
+  --primary-color: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary-color: #3b82f6;
+  --background-color: #f8fafc;
+  --card-background: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: #e2e8f0;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #dc2626;
+  --shadow-color: rgba(37, 99, 235, 0.1);
+  --input-background: #f1f5f9;
+  --grey-color: #94a3b8;
+  --secure-green: #059669;
+  --alert-orange: #ea580c;
+  --neutral-blue: #3b82f6;
+  --highlight: #60a5fa;
+}
 
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #3b82f6;
+    --primary-dark: #2563eb;
+    --background-color: #0f172a;
+    --card-background: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --border-color: #334155;
+    --success-color: #34d399;
+    --warning-color: #fbbf24;
+    --danger-color: #ef4444;
+    --shadow-color: rgba(59, 130, 246, 0.25);
+    --input-background: #1e293b;
+    --secure-green: #10b981;
+    --alert-orange: #f97316;
+    --neutral-blue: #60a5fa;
+    --highlight: #93c5fd;
+  }
+}
+
+/* Base styles */
 body {
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    background-color: #1a1a1a; /* Darker background */
-    color: #e0e0e0; /* Light text color */
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  letter-spacing: 0.015em;
+  transition: background-color 0.3s ease;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
 }
 
+/* Typography */
 h1 {
-    text-transform: uppercase;
-    padding-top: 100px;
-    font-size: 30px;
-    font-weight: 600;
-    color: #bdbdbd; /* Light gray heading color */
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
 }
 
-h1 span {
-    color: #9e9e9e; /* Lighter gray span color */
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
 }
 
 h3 {
-    font-size: 15px;
-    font-weight: 400;    
-    color: #bdbdbd; /* Light gray heading color */    
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
 }
 
-h3 span {
-    font-weight: 600;
+/* Card styles */
+.main-card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px var(--shadow-color),
+    0 2px 4px -2px var(--shadow-color);
+  margin-bottom: 2rem;
+  padding: 2rem;
 }
 
-input[type="range"] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 10px;
-    border-radius: 5px;
-    background: linear-gradient(to right,
-            #ff5252, /* Material red */
-            #ffab40, /* Material orange */
-            #69f0ae); /* Material green */
+/* Password output section */
+.password-output {
+  margin-bottom: 2rem;
 }
 
-input[type="range"]::-webkit-slider-thumb,
-input[type="range"]::-moz-range-thumb,
-input[type="range"]::-ms-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #bdbdbd; /* Light gray thumb color */
-    cursor: pointer;
+.password-output input {
+  background-color: var(--input-background);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  font-family: "Monaco", "Consolas", monospace;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  transition: border-color 0.3s ease;
 }
 
-#passwordLengthText {
-    font-size: 20px;
-    font-weight: 600;
-    color: #bdbdbd; /* Light gray text color */
+.password-output input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-.container {
-    max-width: 500px;
-    margin: auto;
+/* Password strength indicator */
+.password-strength {
+  margin-top: 1rem;
 }
 
-.form-check-label {
-    margin-left: 10px;
+.progress {
+  height: 0.5rem;
+  background-color: var(--border-color);
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.progress-bar.weak {
+  background-color: var(--danger-color);
+}
+
+.progress-bar.medium {
+  background-color: var(--warning-color);
+}
+
+.progress-bar.strong {
+  background-color: var(--success-color);
+}
+
+/* Form controls */
+.form-label {
+  color: var(--text-primary);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-range {
+  height: 1.5rem;
+  padding: 0;
+  width: 100%;
+}
+
+.form-range::-webkit-slider-thumb {
+  background: var(--primary-color);
+  border: 0;
+  border-radius: 50%;
+  height: 1.25rem;
+  width: 1.25rem;
+  margin-top: -0.5rem;
+  cursor: pointer;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  background: var(--border-color);
+  border-radius: 0.25rem;
+  height: 0.25rem;
+}
+
+/* Checkboxes */
+.form-check {
+  margin-bottom: 0.75rem;
+  padding-left: 2rem;
+}
+
+.form-check-input {
+  background-color: var(--input-background);
+  border: 2px solid var(--border-color);
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: -2rem;
+  margin-top: 0.25rem;
 }
 
 .form-check-input:checked {
-    background-color: #424242; /* Darker background for checked input */
-    border-color: #424242;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-.form-check-input:checked::before {
-    color: #ff5252; /* Material red for checked input */
+.form-check-label {
+  color: var(--text-primary);
+  font-weight: 500;
+  cursor: pointer;
 }
 
-.form-check-input:checked::after {
-    color: #69f0ae; /* Material green for checked input */
-}
-
-.button {
-    background-color: #424242; /* Darker background for buttons */
-    color: #e0e0e0; /* Light text color for buttons */
-    font-weight: 500;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-.button:hover {
-    background-color: #616161; /* Darker background on hover */
-}
-
-#copyButton {
-    background-color: #ff5252; /* Material red for copy button */
-}
-
-#copyButton:hover {
-    background-color: #ff1744; /* Darker red on hover */
-}
-
-#password {
-    font-size: 22px;
-    background-color: #333333; /* Darker background for password field */
-    color: #e0e0e0;
-    font-weight: 500;
-    border: 1.5px solid #bdbdbd;
-    padding: 10px;
-    border-radius: 4px;
-}
-
-.st-copyright-text {
-    text-align: center;
-    padding-top: 1rem;
-    color: #bdbdbd;
-}
-
-.st-copyright-text a {
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 500;
-    color: #e0e0e0;
-    text-decoration: none;
-    transition: all 0.4s ease;
-}
-
-.st-copyright-text a:hover {
-    color: #bdbdbd;
-}
-
-.preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #1a1a1a;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.lock-icon {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: #e0e0e0;
-}
-
-.spinner {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 5px solid #e0e0e0;
-    border-top-color: transparent;
-    animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+/* Buttons */
+.btn {
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  letter-spacing: 0.025em;
 }
 
 .btn-primary {
-    background-color: #3f3f3f;
-    border-color: #e0e0e0;    
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
 }
 
 .btn-primary:hover {
-    background-color: #e0e0e0;
-    color: #3f3f3f;
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px var(--shadow-color);
 }
 
-/* Responsive styles */
-@media (max-width: 576px) {
-    h1 {
-        font-size: 30px;
-    }
-
-    h3 {
-        font-size: 15px;
-    }
-
-    #passwordLengthText {
-        font-size: 16px;
-    }
-
-    .button {
-        padding: 6px 12px;
-    }
-
-    #password {
-        font-size: 18px;
-    }
-
-    .st-copyright-text {
-        font-size: 14px;
-    }
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  background-color: transparent;
 }
 
-.st-copyright-text a {
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 500;    
-    color: #e0e0e0;
-    text-decoration: none;
-    transition: all 0.4s ease;
+.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-1px);
 }
 
-.st-copyright-text a:hover {
-    color: #9e9e9e
+/* Password tips */
+.password-tips {
+  background-color: var(--card-background);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.password-tips .card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+}
+
+.password-tips ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.password-tips li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.password-tips li:before {
+  content: "•";
+  color: var(--primary-color);
+  position: absolute;
+  left: 0.5rem;
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+  margin-top: auto;
+  padding: 2rem 0;
+  background-color: var(--card-background);
+  border-top: 1px solid var(--border-color);
+}
+
+.footer p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Badge styles */
+.badge {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.35em 0.65em;
+  border-radius: 0.375rem;
+}
+
+.badge.bg-primary {
+  background-color: var(--primary-color) !important;
+  color: white;
+}
+
+/* Preloader */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.preloader i {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+}
+
+/* Alerts */
+.alert {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.alert-danger {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: var(--danger-color);
+}
+
+/* Tooltip */
+.tooltip {
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+  }
+
+  .main-card {
+    padding: 1.5rem;
+  }
+
+  .password-output input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .btn {
+    padding: 0.625rem 1.25rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes copySuccess {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.copy-success {
+  animation: copySuccess 0.3s ease-in-out;
+}
+
+/* Accessibility */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus styles */
+:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4);
+}
+
+@media (forced-colors: active) {
+  .btn-primary {
+    border: 2px solid currentColor;
+  }
+
+  .progress-bar {
+    border: 1px solid currentColor;
+  }
+}
+
+.text-muted {
+  color: var(--secondary-color) !important;
+}
+
+.text-muted a {
+  color: var(--primary-color) !important;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.text-muted a:hover {
+  color: var(--primary-dark) !important;
+  text-decoration: underline !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .text-muted {
+    color: var(--grey-color) !important;
+  }
+
+  .text-muted a {
+    color: var(--primary-dark) !important;
+  }
+
+  .text-muted a:hover {
+    color: var(--primary-dark) !important;
+  }
+}
+
+.h6,
+h3.h6 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--secondary-color) !important;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.h6 .bi-info-circle {
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .h6,
+  h3.h6 {
+    color: var(--grey-color) !important;
+  }
+
+  .h6 .bi-info-circle {
+    color: var(--primary-dark);
+  }
 }
