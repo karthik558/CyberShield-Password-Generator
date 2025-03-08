@@ -104,9 +104,10 @@ h3 {
   font-family: "Monaco", "Consolas", monospace;
   font-size: 1.25rem;
   letter-spacing: 0.05em;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 0.5rem;
-  width: 100%;
+  width: auto;
+  height: auto;
   transition: border-color 0.3s ease;
 }
 
@@ -498,4 +499,17 @@ h3.h6 {
   .h6 .bi-info-circle {
     color: var(--primary-dark);
   }
+}
+
+input#customText.custom-text-input {
+  font-size: 0.8rem;
+  margin-left: 5px;
+  padding: 0.5rem;
+  border: 2px solid var(--primary-color);
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+input#customText.custom-text-input:focus {
+  border-color: var(--primary-dark);
 }

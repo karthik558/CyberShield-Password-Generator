@@ -41,6 +41,17 @@ class PasswordGenerator {
         avoidRepeating: document.getElementById('avoidRepeating')
       }
     };
+
+    // Add new elements to HTML first
+    const customTextInput = document.createElement('input');
+    customTextInput.type = 'text';
+    customTextInput.id = 'customText';
+    customTextInput.placeholder = 'Enter custom text (optional)';
+    customTextInput.classList.add('custom-text-input');
+
+    // Insert it before the generate button
+    const generateButton = document.querySelector('.btn');
+    generateButton.parentNode.insertBefore(customTextInput, generateButton);
   }
 
   attachEventListeners() {
@@ -70,6 +81,7 @@ class PasswordGenerator {
     try {
       const length = parseInt(this.elements.lengthSlider.value);
       let chars = this.getSelectedCharacterSet();
+      const customText = document.getElementById('customText').value.trim();
 
       if (chars.length === 0) {
         this.showError('Please select at least one character type');
@@ -80,7 +92,14 @@ class PasswordGenerator {
       const requireAll = this.elements.checkboxes.requireAll?.checked;
       const avoidRepeating = this.elements.checkboxes.avoidRepeating?.checked;
 
-      if (requireAll) {
+      if (customText) {
+        // Convert custom text to password-like format
+        password = this.customTextToPassword(customText);
+        // Append additional random characters if needed
+        if (password.length < length) {
+          password += this.generateRandomChars(length - password.length, chars, avoidRepeating);
+        }
+      } else if (requireAll) {
         password = this.generateWithRequiredTypes();
       } else {
         // Use crypto.getRandomValues for better randomness
@@ -271,6 +290,48 @@ class PasswordGenerator {
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array.join('');
+  }
+
+  customTextToPassword(text) {
+    const replacements = {
+      'a': '@',
+      'i': '!',
+      'e': '3',
+      'o': '0',
+      's': '$',
+      'l': '1',
+      't': '+',
+      'h': '#',
+      'b': '8'
+    };
+
+    return text.split('').map(char => {
+      const lowerChar = char.toLowerCase();
+      // Randomly decide to convert to upper or lower case
+      const randomCase = Math.random() > 0.5 ? char.toUpperCase() : char.toLowerCase();
+      // Replace with special character or keep the random case
+      return replacements[lowerChar] || randomCase;
+    }).join('');
+  }
+
+  generateRandomChars(length, chars, avoidRepeating) {
+    let password = '';
+    const array = new Uint32Array(length);
+    crypto.getRandomValues(array);
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = array[i] % chars.length;
+      const char = chars.charAt(randomIndex);
+
+      if (avoidRepeating && password.includes(char)) {
+        i--; // Try again
+        continue;
+      }
+
+      password += char;
+    }
+
+    return password;
   }
 }
 
