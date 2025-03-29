@@ -1,145 +1,116 @@
 <div align="center">
-<img src="assets/img/favi-icon/favi-lock.png" alt="CyberShield Logo" width="200"/>
-  <h1>🔒 CyberShield</h1>
+  <img src="public/favicon-dark.png" alt="CyberShield Logo" width="150"/>
+  <h1>CyberShield</h1>
   <p><strong>Advanced Password Generator & Security Tool</strong></p>
 
-![License](https://img.shields.io/github/license/karthik558/password-generator)
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fpassgen.karthiklal.in)](https://passgen.karthiklal.in)
-
-  <p align="center">
-    <a href="#✨-features">Features</a> •
-    <a href="#🚀-live-demo">Live Demo</a> •
-    <a href="#💻-installation">Installation</a> •
-    <a href="#🛠️-usage">Usage</a> •
-    <a href="#🤝-contributing">Contributing</a>
-  </p>
-
-  <img src="assets/img/screenshot-docs/pc-1.png" alt="CyberShield Screenshot" width="800"/>
-
-  <img src="assets/img/screenshot-docs/pc-2.png" alt="CyberShield Screenshot" width="400"/>
-
-  <img src="assets/img/screenshot-docs/pc-3.png" alt="CyberShield Screenshot" width="400"/>
- 
+  [![License](https://img.shields.io/github/license/karthik558/CyberShield-Password-Generator)](LICENSE)
+  [![Website](https://img.shields.io/website?url=https%3A%2F%2Fpassword.karthiklal.in)](https://password.karthiklal.in)
+  [![GitHub](https://img.shields.io/github/stars/karthik558/CyberShield-Password-Generator)](https://github.com/karthik558/CyberShield-Password-Generator)
 </div>
 
-## ✨ Features
+## About the Project
+
+CyberShield is a modern, secure password generator that helps you create strong, unique passwords for your accounts. Built with React and TypeScript, it offers a beautiful, responsive interface with advanced security features and real-time password strength analysis.
+
+## Features
 
 - 🔐 **Advanced Security**
-
   - Cryptographically secure random number generation
   - Multiple character sets for enhanced complexity
-  - Password strength assessment in real-time
+  - Real-time password strength assessment
+  - Time-to-crack estimation
 
 - 🎨 **Modern Interface**
-
   - Clean, intuitive user interface
   - Dark/Light theme support
   - Responsive design for all devices
+  - Beautiful animations and transitions
 
 - ⚙️ **Customization Options**
-
   - Password length (8-128 characters)
   - Character type selection
     - Uppercase letters (A-Z)
     - Lowercase letters (a-z)
     - Numbers (0-9)
-    - Special characters (!@#$%^&\*)
+    - Special characters (!@#$%^&*)
   - Exclude ambiguous characters
   - Avoid character repetition
+  - Leet speak conversion
 
 - 🔄 **Additional Features**
   - One-click copy to clipboard
-  - Password strength indicator
-  - Security recommendations
+  - Password history tracking
+  - Password categories
+  - Export/Import functionality
+  - Security tips and recommendations
   - Cross-browser compatibility
 
-## 🚀 Live Demo
+## Screenshots
 
-Experience CyberShield in action: [https://passgen.karthiklal.in](https://passgen.karthiklal.in)
+<div align="center">
+  <img src="https://raw.githubusercontent.com/FoORK-Lab/pass-gen-dependencies/refs/heads/main/passgen-light.png" alt="CyberShield Main Interface" width="400"/>
+  <img src="https://raw.githubusercontent.com/FoORK-Lab/pass-gen-dependencies/refs/heads/main/passgen-dark.png" alt="CyberShield Password Generation" width="400"/>
+</div>
 
-## 💻 Installation
-
-### Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/karthik558/CyberShield-Password-Generator.git
-
-# Navigate to project directory
-cd CyberShield-Password-Generator
-
-# Open in browser
-# For Linux/macOS
-open index.html
-
-# For Windows
-start index.html
-```
-
-## 🛠️ Usage
+## Usage
 
 1. **Access the Generator**
-
-   - Visit [https://passgen.karthiklal.in](https://passgen.karthiklal.in)
-   - Or open `index.html` locally
+   - Visit [https://password.karthiklal.in](https://password.karthiklal.in)
+   - Or run locally using the installation instructions below
 
 2. **Configure Password Settings**
-
    - Set desired password length using the slider
    - Select character types to include
    - Enable/disable additional options
+   - Choose between random or leet speak generation
 
 3. **Generate & Copy**
    - Click "Generate Password"
    - Use the copy button to copy to clipboard
    - Check password strength indicator
+   - Save to history if needed
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Here's how you can help:
 
 1. **Fork the Repository**
-
    ```bash
-   git clone https://github.com/yourusername/CyberShield-Password-Generator.git
+   git clone https://github.com/karthik558/CyberShield-Password-Generator.git
    ```
 
 2. **Create a Branch**
-
    ```bash
-   git checkout -b feature/SecurityRecommendations
+   git checkout -b feature/YourFeature
    ```
 
 3. **Make Changes**
-
    - Write clean, documented code
    - Follow existing code style
    - Add tests if applicable
 
-4. **Test Your Changes**
-
-   - Ensure the generator functions as expected
-   - Verify the password strength indicator
-
-5. **Submit a Pull Request**
+4. **Submit a Pull Request**
    - Describe your changes in detail
    - Link any related issues
 
-## 📝 License
+## Web Technology
 
-Licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- **Frontend Framework**: React with TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Shadcn/ui
+- **State Management**: React Hooks
+- **Build Tool**: Vite
+- **Package Manager**: npm/yarn
 
-## 🌟 Acknowledgments
+## License
 
-- Icons by [Bootstrap Icons](https://icons.getbootstrap.com/)
-- Font by [Google Fonts](https://fonts.google.com/)
-- Inspired by modern security practices
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📊 Project Status
+## Project Status
 
 <div align="center">
 
-**Current Version: 3.0.0**
+**Current Version: 4.0.0**
 
 | Feature           | Status |
 | ----------------- | ------ |
@@ -158,7 +129,7 @@ Licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
   
 **⭐ Star us on GitHub — it motivates me a lot!**
 
-[Report Bug](https://github.com/karthik558/password-generator/issues) •
-[Request Feature](https://github.com/karthik558/password-generator/issues)
+[Report Bug](https://github.com/karthik558/CyberShield-Password-Generator/issues) •
+[Request Feature](https://github.com/karthik558/CyberShield-Password-Generator/issues)
 
-</div>
+</div> 
