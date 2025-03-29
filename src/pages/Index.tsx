@@ -27,11 +27,11 @@ const Index = () => {
             <div className="flex items-center gap-2">
               <img 
                 src={isDark ? "/favicon.png" : "/favicon-dark.png"} 
-                alt="CyberShield Logo" 
+                alt="CyberKeyGen Logo" 
                 className="w-6 h-6" 
               />
               <h1 className="text-2xl font-bold tracking-tight">
-                CyberShield
+                CyberKeyGen
               </h1>
               <span className="ml-2 text-xs bg-secondary rounded-full px-2.5 py-1 font-medium">
                 Password Generator
@@ -48,7 +48,7 @@ const Index = () => {
         <footer className="py-6 border-t border-border mt-8">
           <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
             <p>
-              © 2025 CyberShield. Designed & Developed by{" "}
+              © 2025 CyberKeyGen. Designed & Developed by{" "}
               <a 
                 href="https://karthiklal.in" 
                 target="_blank" 

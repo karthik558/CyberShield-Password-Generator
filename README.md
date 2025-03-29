@@ -1,16 +1,16 @@
 <div align="center">
-  <img src="public/favicon-dark.png" alt="CyberShield Logo" width="150"/>
-  <h1>CyberShield</h1>
+  <img src="public/favicon-dark.png" alt="CyberKeyGen" width="150"/>
+  <h1>CyberKeyGen</h1>
   <p><strong>Advanced Password Generator & Security Tool</strong></p>
 
-  [![License](https://img.shields.io/github/license/karthik558/CyberShield-Password-Generator)](LICENSE)
+  [![License](https://img.shields.io/github/license/karthik558/CyberKeyGen)](LICENSE)
   [![Website](https://img.shields.io/website?url=https%3A%2F%2Fpassword.karthiklal.in)](https://password.karthiklal.in)
-  [![GitHub](https://img.shields.io/github/stars/karthik558/CyberShield-Password-Generator)](https://github.com/karthik558/CyberShield-Password-Generator)
+  [![GitHub](https://img.shields.io/github/stars/karthik558/CyberKeyGen)](https://github.com/karthik558/CyberKeyGen)
 </div>
 
 ## About the Project
 
-CyberShield is a modern, secure password generator that helps you create strong, unique passwords for your accounts. Built with React and TypeScript, it offers a beautiful, responsive interface with advanced security features and real-time password strength analysis.
+CyberKeyGen is a modern, secure password generator that helps you create strong, unique passwords for your accounts. Built with React and TypeScript, it offers a beautiful, responsive interface with advanced security features and real-time password strength analysis.
 
 ## Features
 
@@ -48,8 +48,8 @@ CyberShield is a modern, secure password generator that helps you create strong,
 ## Screenshots
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/FoORK-Lab/pass-gen-dependencies/refs/heads/main/passgen-light.png" alt="CyberShield Main Interface" width="400"/>
-  <img src="https://raw.githubusercontent.com/FoORK-Lab/pass-gen-dependencies/refs/heads/main/passgen-dark.png" alt="CyberShield Password Generation" width="400"/>
+  <img src="https://raw.githubusercontent.com/FoORK-Lab/pass-gen-dependencies/refs/heads/main/passgen-light.png" alt="CyberKeyGen Main Interface Light" width="400"/>
+  <img src="https://raw.githubusercontent.com/FoORK-Lab/pass-gen-dependencies/refs/heads/main/passgen-dark.png" alt="CyberKeyGen Main Interface Dark" width="400"/>
 </div>
 
 ## Usage
@@ -76,7 +76,7 @@ We welcome contributions! Here's how you can help:
 
 1. **Fork the Repository**
    ```bash
-   git clone https://github.com/karthik558/CyberShield-Password-Generator.git
+   git clone https://github.com/karthik558/CyberKeyGen.git
    ```
 
 2. **Create a Branch**
@@ -129,7 +129,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   
 **⭐ Star us on GitHub — it motivates me a lot!**
 
-[Report Bug](https://github.com/karthik558/CyberShield-Password-Generator/issues) •
-[Request Feature](https://github.com/karthik558/CyberShield-Password-Generator/issues)
+[Report Bug](https://github.com/karthik558/CyberKeyGen/issues) •
+[Request Feature](https://github.com/karthik558/CyberKeyGen/issues)
 
 </div> 

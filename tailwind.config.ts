@@ -65,7 +65,7 @@ export default {
 				},
 				dark: '#1a1a1a',
 				'dark-hover': '#2a2a2a',
-				'cybershield': {
+				'cyberkeygen': {
 					accent: '#4F46E5',
 					'accent-hover': '#4338CA',
 				},
