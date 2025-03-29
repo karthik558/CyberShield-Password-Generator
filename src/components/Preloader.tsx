@@ -1,11 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time - minimum 800ms for animation effect
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 800);
@@ -13,11 +11,15 @@ const Preloader = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  if (!isLoading) return null;
+
   return (
-    <div className={`apple-loader ${isLoading ? "" : "hidden"}`}>
-      <div className="loader-dot"></div>
-      <div className="loader-dot"></div>
-      <div className="loader-dot"></div>
+    <div className="fixed inset-0 bg-background flex items-center justify-center z-50">
+      <div className="flex space-x-2">
+        <div className="w-3 h-3 rounded-full bg-primary animate-pulse"></div>
+        <div className="w-3 h-3 rounded-full bg-primary animate-pulse delay-100"></div>
+        <div className="w-3 h-3 rounded-full bg-primary animate-pulse delay-200"></div>
+      </div>
     </div>
   );
 };
