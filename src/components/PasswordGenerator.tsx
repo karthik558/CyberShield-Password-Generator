@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -21,6 +22,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { convertToLeetSpeak, createMixedPassword } from "@/utils/leetSpeakConverter";
+import { generatePronounceablePassword } from "@/utils/pronounceableGenerator";
 
 // Import the components
 import PasswordHistory from "./PasswordHistory";
@@ -38,6 +40,7 @@ interface PasswordSettings {
   excludeAmbiguous: boolean;
   requireAllTypes: boolean;
   avoidRepeating: boolean;
+  usePronounceable: boolean;
 }
 
 const PasswordGenerator = () => {
@@ -50,6 +53,7 @@ const PasswordGenerator = () => {
     excludeAmbiguous: false,
     requireAllTypes: true,
     avoidRepeating: false,
+    usePronounceable: false,
   });
 
   const [password, setPassword] = useState("");
@@ -118,6 +122,23 @@ const PasswordGenerator = () => {
 
   const generateRandomPassword = () => {
     try {
+      // If pronounceable password option is selected
+      if (settings.usePronounceable) {
+        const pronounceablePassword = generatePronounceablePassword(
+          settings.length,
+          settings.includeUppercase,
+          settings.includeNumbers,
+          settings.includeSymbols
+        );
+        
+        setPassword(pronounceablePassword);
+        const strength = calculatePasswordStrength(pronounceablePassword);
+        setPasswordStrength(strength);
+        
+        toast.success("Pronounceable password generated successfully!");
+        return;
+      }
+      
       // Ensure at least one character type is selected
       if (
         !settings.includeLowercase &&
@@ -329,9 +350,6 @@ const PasswordGenerator = () => {
       toast.error("Generate a password first!");
       return;
     }
-
-    // Save to history first
-    saveToHistory();
 
     // Then add to favorites
     addToFavorites({
@@ -661,6 +679,16 @@ const PasswordGenerator = () => {
                       onCheckedChange={(checked) => setSettings({ ...settings, excludeAmbiguous: checked })}
                     />
                   </div>
+                  
+                  {/* New Pronounceable option */}
+                  <div className="flex items-center justify-between space-x-2">
+                    <Label htmlFor="pronounceable" className="text-xs">Pronounceable Password</Label>
+                    <Switch
+                      id="pronounceable"
+                      checked={settings.usePronounceable}
+                      onCheckedChange={(checked) => setSettings({ ...settings, usePronounceable: checked })}
+                    />
+                  </div>
                 </div>
               </div>
               
@@ -676,6 +704,7 @@ const PasswordGenerator = () => {
                       id="all-types"
                       checked={settings.requireAllTypes}
                       onCheckedChange={(checked) => setSettings({ ...settings, requireAllTypes: checked })}
+                      disabled={settings.usePronounceable}
                     />
                   </div>
                   
@@ -685,6 +714,7 @@ const PasswordGenerator = () => {
                       id="avoid-repeating"
                       checked={settings.avoidRepeating}
                       onCheckedChange={(checked) => setSettings({ ...settings, avoidRepeating: checked })}
+                      disabled={settings.usePronounceable}
                     />
                   </div>
                 </div>
@@ -798,6 +828,7 @@ const PasswordGenerator = () => {
                 <li>Avoid using personal information</li>
                 <li>Use unique passwords for each account</li>
                 <li>Consider using a password manager</li>
+                <li>Pronounceable passwords can be easier to remember but may be less secure</li>
               </ul>
             </CollapsibleContent>
           </Collapsible>
