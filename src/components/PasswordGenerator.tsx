@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -331,6 +330,10 @@ const PasswordGenerator = () => {
       return;
     }
 
+    // Save to history first
+    saveToHistory();
+
+    // Then add to favorites
     addToFavorites({
       password: currentPassword,
       timestamp: new Date(),
@@ -389,6 +392,7 @@ const PasswordGenerator = () => {
             defaultValue="random" 
             className="w-full"
             onValueChange={(value) => setActiveTab(value)}
+            value={activeTab}
           >
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="random" className="text-sm">Random Password</TabsTrigger>

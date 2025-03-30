@@ -19,6 +19,7 @@ import {
   ServerIcon,
   PlusIcon
 } from "lucide-react";
+import { toast } from "sonner";
 
 interface PasswordCategoryProps {
   onSelectCategory: (category: string) => void;
@@ -42,28 +43,43 @@ const PasswordCategories: React.FC<PasswordCategoryProps> = ({
 }) => {
   const [isCustomOpen, setIsCustomOpen] = useState(false);
   const [customCategory, setCustomCategory] = useState("");
+  const [popoverOpen, setPopoverOpen] = useState(false);
 
   const handleCustomCategory = () => {
     if (customCategory.trim()) {
       onSelectCategory(customCategory.trim());
       setCustomCategory("");
       setIsCustomOpen(false);
+      setPopoverOpen(false);
+      toast.success(`Custom category "${customCategory}" set`);
+    } else {
+      toast.error("Please enter a category name");
     }
   };
 
+  const getCategoryName = (id: string) => {
+    const category = categories.find(c => c.id === id);
+    return category ? category.name : id;
+  };
+
+  const handleCategorySelect = (categoryId: string) => {
+    onSelectCategory(categoryId);
+    setPopoverOpen(false);
+  };
+
   return (
-    <Popover>
+    <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-9 truncate max-w-[180px]">
           <FolderIcon className="h-4 w-4 mr-2 flex-shrink-0" />
           <span className="truncate">
             {selectedCategory 
-              ? categories.find(c => c.id === selectedCategory)?.name || selectedCategory
+              ? getCategoryName(selectedCategory)
               : "Category"}
           </span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-64 p-2">
+      <PopoverContent className="w-64 p-2" side="top">
         <div className="grid grid-cols-2 gap-1">
           {categories.map((category) => (
             <Button
@@ -71,7 +87,7 @@ const PasswordCategories: React.FC<PasswordCategoryProps> = ({
               variant={selectedCategory === category.id ? "default" : "ghost"}
               size="sm"
               className="justify-start h-9 px-2"
-              onClick={() => onSelectCategory(category.id)}
+              onClick={() => handleCategorySelect(category.id)}
             >
               <span className="mr-2 flex-shrink-0">{category.icon}</span>
               <span className="text-xs truncate">{category.name}</span>
@@ -88,14 +104,16 @@ const PasswordCategories: React.FC<PasswordCategoryProps> = ({
           </Button>
           {isCustomOpen && (
             <div className="col-span-2 flex gap-1 mt-1">
-              <Input
-                type="text"
-                placeholder="Enter category name"
-                value={customCategory}
-                onChange={(e) => setCustomCategory(e.target.value)}
-                className="h-9 text-xs"
-                onKeyDown={(e) => e.key === 'Enter' && handleCustomCategory()}
-              />
+              <div className="flex-1">
+                <Input
+                  type="text"
+                  placeholder="Enter category name"
+                  value={customCategory}
+                  onChange={(e) => setCustomCategory(e.target.value)}
+                  className="h-9 text-xs"
+                  onKeyDown={(e) => e.key === 'Enter' && handleCustomCategory()}
+                />
+              </div>
               <Button
                 size="sm"
                 className="h-9 flex-shrink-0"

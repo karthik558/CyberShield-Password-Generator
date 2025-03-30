@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import PasswordGenerator from "@/components/PasswordGenerator";
 import Preloader from "@/components/Preloader";
+import { Toaster } from "@/components/ui/sonner";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(true);
@@ -61,6 +62,7 @@ const Index = () => {
           </div>
         </footer>
       </div>
+      <Toaster />
     </ThemeProvider>
   );
 };
