@@ -14,7 +14,8 @@ import {
   Trash2, 
   Eye, 
   EyeOff,
-  CheckIcon 
+  CheckIcon,
+  Tag
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -24,6 +25,7 @@ interface PasswordFavoritesProps {
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
     type: "random" | "leet";
+    category?: string;
   }>;
   onClearFavorites: () => void;
   onCopyPassword: (password: string) => void;
@@ -109,9 +111,17 @@ const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
                   <span className="text-xs opacity-70">
                     {item.timestamp.toLocaleString()}
                   </span>
-                  <span className="text-xs capitalize bg-secondary px-2 py-0.5 rounded-full">
-                    {item.type}
-                  </span>
+                  <div className="flex items-center gap-1">
+                    {item.category && item.category !== "uncategorized" && (
+                      <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full flex items-center">
+                        <Tag className="h-3 w-3 mr-1" />
+                        {item.category}
+                      </span>
+                    )}
+                    <span className="text-xs capitalize bg-secondary px-2 py-0.5 rounded-full">
+                      {item.type}
+                    </span>
+                  </div>
                 </div>
                 <div className="font-mono bg-secondary/30 rounded p-2 mb-2 overflow-x-auto">
                   {showPasswords ? (

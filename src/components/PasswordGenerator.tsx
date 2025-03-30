@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -73,7 +72,7 @@ const PasswordGenerator = () => {
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
     type: "random" | "leet";
-    category: string;
+    category?: string;
   }>>([]);
 
   const [passwordFavorites, setPasswordFavorites] = useState<Array<{
@@ -81,7 +80,7 @@ const PasswordGenerator = () => {
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
     type: "random" | "leet";
-    category: string;
+    category?: string;
   }>>([]);
 
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -351,7 +350,7 @@ const PasswordGenerator = () => {
       return;
     }
 
-    // Then add to favorites
+    // Add to favorites without adding to history
     addToFavorites({
       password: currentPassword,
       timestamp: new Date(),
@@ -385,7 +384,7 @@ const PasswordGenerator = () => {
   };
 
   useEffect(() => {
-    // Remove the automatic password generation on component mount
+    // Empty useEffect to avoid automatic password generation
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
