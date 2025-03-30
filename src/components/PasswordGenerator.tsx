@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -16,13 +17,15 @@ import {
   RefreshCw,
   ChevronDown,
   Info,
-  ShieldCheck
+  ShieldCheck,
+  Heart
 } from "lucide-react";
 import { toast } from "sonner";
 import { convertToLeetSpeak, createMixedPassword } from "@/utils/leetSpeakConverter";
 
-// Import the new components
+// Import the components
 import PasswordHistory from "./PasswordHistory";
+import PasswordFavorites from "./PasswordFavorites";
 import PasswordCategories from "./PasswordCategories";
 import PasswordStrengthAnalyzer from "./PasswordStrengthAnalyzer";
 import PasswordExportImport from "./PasswordExportImport";
@@ -69,6 +72,15 @@ const PasswordGenerator = () => {
     type: "random" | "leet";
     category: string;
   }>>([]);
+
+  const [passwordFavorites, setPasswordFavorites] = useState<Array<{
+    password: string;
+    timestamp: Date;
+    strength: "weak" | "moderate" | "strong" | "very-strong";
+    type: "random" | "leet";
+    category: string;
+  }>>([]);
+
   const [selectedCategory, setSelectedCategory] = useState("");
 
   // Character sets
@@ -204,18 +216,7 @@ const PasswordGenerator = () => {
       const strength = calculatePasswordStrength(result);
       setPasswordStrength(strength);
       
-      // Add to history
-      setPasswordHistory(prev => [
-        {
-          password: result,
-          timestamp: new Date(),
-          strength: strength,
-          type: "random",
-          category: selectedCategory || "uncategorized"
-        },
-        ...prev.slice(0, 19) // Keep only the 20 most recent passwords
-      ]);
-      
+      // Don't automatically add to history, user will manually add favorites
       toast.success("Password generated successfully!");
     } catch (error) {
       console.error("Password generation error:", error);
@@ -244,18 +245,7 @@ const PasswordGenerator = () => {
     const strength = calculatePasswordStrength(mixedPassword);
     setPasswordStrength(strength);
     
-    // Add to history
-    setPasswordHistory(prev => [
-      {
-        password: mixedPassword,
-        timestamp: new Date(),
-        strength: strength,
-        type: "leet",
-        category: selectedCategory || "uncategorized"
-      },
-      ...prev.slice(0, 19) // Keep only the 20 most recent passwords
-    ]);
-    
+    // Don't automatically add to history
     toast.success("Password created successfully!");
   };
 
@@ -287,6 +277,41 @@ const PasswordGenerator = () => {
     toast.success("Password history cleared");
   };
 
+  const clearFavorites = () => {
+    setPasswordFavorites([]);
+    toast.success("Favorites cleared");
+  };
+
+  const addToFavorites = (passwordItem: {
+    password: string;
+    timestamp: Date;
+    strength: "weak" | "moderate" | "strong" | "very-strong";
+    type: "random" | "leet";
+    category?: string;
+  }) => {
+    // Check if password already exists in favorites
+    if (passwordFavorites.some(item => item.password === passwordItem.password)) {
+      toast.info("Password already in favorites");
+      return;
+    }
+
+    // Add to favorites with category
+    setPasswordFavorites(prev => [
+      {
+        ...passwordItem,
+        category: passwordItem.category || selectedCategory || "uncategorized"
+      },
+      ...prev
+    ]);
+    
+    toast.success("Added to favorites");
+  };
+
+  const removeFromFavorites = (index: number) => {
+    setPasswordFavorites(prev => prev.filter((_, i) => i !== index));
+    toast.success("Removed from favorites");
+  };
+
   const handleImportPasswords = (importedPasswords: Array<any>) => {
     // Merge imported passwords with existing ones, avoiding duplicates
     const existingPasswords = new Set(passwordHistory.map(p => p.password));
@@ -298,9 +323,48 @@ const PasswordGenerator = () => {
     ].slice(0, 100)); // Limit to 100 passwords total
   };
 
+  const addCurrentPasswordToFavorites = () => {
+    const currentPassword = activeTab === "random" ? password : leetPassword;
+    
+    if (!currentPassword) {
+      toast.error("Generate a password first!");
+      return;
+    }
+
+    addToFavorites({
+      password: currentPassword,
+      timestamp: new Date(),
+      strength: passwordStrength,
+      type: activeTab as "random" | "leet",
+      category: selectedCategory || "uncategorized"
+    });
+  };
+
+  const saveToHistory = () => {
+    const currentPassword = activeTab === "random" ? password : leetPassword;
+    
+    if (!currentPassword) {
+      toast.error("Generate a password first!");
+      return;
+    }
+
+    // Add to history
+    setPasswordHistory(prev => [
+      {
+        password: currentPassword,
+        timestamp: new Date(),
+        strength: passwordStrength,
+        type: activeTab as "random" | "leet",
+        category: selectedCategory || "uncategorized"
+      },
+      ...prev.slice(0, 19) // Keep only the 20 most recent passwords
+    ]);
+    
+    toast.success("Added to history");
+  };
+
   useEffect(() => {
     // Remove the automatic password generation on component mount
-    // generateRandomPassword();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -344,6 +408,19 @@ const PasswordGenerator = () => {
                         () => toast.error("Failed to copy password")
                       );
                     }}
+                    onAddToFavorites={addToFavorites}
+                    favorites={passwordFavorites}
+                  />
+                  <PasswordFavorites
+                    favorites={passwordFavorites}
+                    onClearFavorites={clearFavorites}
+                    onCopyPassword={(pwd) => {
+                      navigator.clipboard.writeText(pwd).then(
+                        () => toast.success("Password copied to clipboard!"),
+                        () => toast.error("Failed to copy password")
+                      );
+                    }}
+                    onRemoveFromFavorites={removeFromFavorites}
                   />
                   <PasswordStrengthAnalyzer password={currentPassword} />
                 </div>
@@ -390,14 +467,25 @@ const PasswordGenerator = () => {
                         selectedCategory={selectedCategory}
                       />
                     </div>
-                    <Button
-                      onClick={generateRandomPassword}
-                      className="h-9"
-                      size="sm"
-                    >
-                      <RefreshCw className="mr-2 h-4 w-4" />
-                      Generate
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={addCurrentPasswordToFavorites}
+                        className="h-9"
+                        size="sm"
+                      >
+                        <Heart className="mr-2 h-4 w-4" />
+                        Save
+                      </Button>
+                      <Button
+                        onClick={generateRandomPassword}
+                        className="h-9"
+                        size="sm"
+                      >
+                        <RefreshCw className="mr-2 h-4 w-4" />
+                        Generate
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -457,14 +545,25 @@ const PasswordGenerator = () => {
                             selectedCategory={selectedCategory}
                           />
                         </div>
-                        <Button
-                          onClick={generateLeetPassword}
-                          className="h-9"
-                          size="sm"
-                        >
-                          <RefreshCw className="mr-2 h-4 w-4" />
-                          Regenerate
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            onClick={addCurrentPasswordToFavorites}
+                            className="h-9"
+                            size="sm"
+                          >
+                            <Heart className="mr-2 h-4 w-4" />
+                            Save
+                          </Button>
+                          <Button
+                            onClick={generateLeetPassword}
+                            className="h-9"
+                            size="sm"
+                          >
+                            <RefreshCw className="mr-2 h-4 w-4" />
+                            Regenerate
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   )}

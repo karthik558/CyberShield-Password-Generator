@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -53,14 +54,16 @@ const PasswordCategories: React.FC<PasswordCategoryProps> = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-9">
-          <FolderIcon className="h-4 w-4 mr-2" />
-          {selectedCategory 
-            ? categories.find(c => c.id === selectedCategory)?.name || selectedCategory
-            : "Category"}
+        <Button variant="outline" size="sm" className="h-9 truncate max-w-[180px]">
+          <FolderIcon className="h-4 w-4 mr-2 flex-shrink-0" />
+          <span className="truncate">
+            {selectedCategory 
+              ? categories.find(c => c.id === selectedCategory)?.name || selectedCategory
+              : "Category"}
+          </span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-56 p-2">
+      <PopoverContent className="w-64 p-2">
         <div className="grid grid-cols-2 gap-1">
           {categories.map((category) => (
             <Button
@@ -70,8 +73,8 @@ const PasswordCategories: React.FC<PasswordCategoryProps> = ({
               className="justify-start h-9 px-2"
               onClick={() => onSelectCategory(category.id)}
             >
-              <span className="mr-2">{category.icon}</span>
-              <span className="text-xs">{category.name}</span>
+              <span className="mr-2 flex-shrink-0">{category.icon}</span>
+              <span className="text-xs truncate">{category.name}</span>
             </Button>
           ))}
           <Button
@@ -80,7 +83,7 @@ const PasswordCategories: React.FC<PasswordCategoryProps> = ({
             className="justify-start h-9 px-2 col-span-2"
             onClick={() => setIsCustomOpen(!isCustomOpen)}
           >
-            <PlusIcon className="h-4 w-4 mr-2" />
+            <PlusIcon className="h-4 w-4 mr-2 flex-shrink-0" />
             <span className="text-xs">Custom Category</span>
           </Button>
           {isCustomOpen && (
@@ -95,7 +98,7 @@ const PasswordCategories: React.FC<PasswordCategoryProps> = ({
               />
               <Button
                 size="sm"
-                className="h-9"
+                className="h-9 flex-shrink-0"
                 onClick={handleCustomCategory}
               >
                 Add

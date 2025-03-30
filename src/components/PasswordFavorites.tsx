@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { 
   Sheet, 
   SheetContent, 
@@ -10,56 +10,39 @@ import {
 import { Button } from "@/components/ui/button";
 import { 
   ClipboardCopy, 
-  History, 
+  Heart, 
   Trash2, 
   Eye, 
   EyeOff,
-  Heart,
   CheckIcon 
 } from "lucide-react";
 import { toast } from "sonner";
 
-interface PasswordHistoryProps {
-  history: Array<{
-    password: string;
-    timestamp: Date;
-    strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
-  }>;
-  onClearHistory: () => void;
-  onCopyPassword: (password: string) => void;
-  onAddToFavorites: (password: {
-    password: string;
-    timestamp: Date;
-    strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
-  }) => void;
+interface PasswordFavoritesProps {
   favorites: Array<{
     password: string;
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
     type: "random" | "leet";
   }>;
+  onClearFavorites: () => void;
+  onCopyPassword: (password: string) => void;
+  onRemoveFromFavorites: (index: number) => void;
 }
 
-const PasswordHistory: React.FC<PasswordHistoryProps> = ({
-  history,
-  onClearHistory,
+const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
+  favorites,
+  onClearFavorites,
   onCopyPassword,
-  onAddToFavorites,
-  favorites
+  onRemoveFromFavorites
 }) => {
-  const [showPasswords, setShowPasswords] = React.useState(false);
-  const [copiedIndex, setCopiedIndex] = React.useState<number | null>(null);
+  const [showPasswords, setShowPasswords] = useState(false);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = (password: string, index: number) => {
     onCopyPassword(password);
     setCopiedIndex(index);
     setTimeout(() => setCopiedIndex(null), 2000);
-  };
-
-  const isInFavorites = (password: string) => {
-    return favorites.some(fav => fav.password === password);
   };
 
   const getStrengthColor = (strength: string) => {
@@ -76,18 +59,18 @@ const PasswordHistory: React.FC<PasswordHistoryProps> = ({
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon" className="mr-2 relative">
-          <History className="h-4 w-4" />
-          {history.length > 0 && (
+          <Heart className="h-4 w-4" fill={favorites.length > 0 ? "currentColor" : "none"} />
+          {favorites.length > 0 && (
             <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center">
-              {history.length}
+              {favorites.length}
             </span>
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto bg-background text-foreground">
+      <SheetContent className="overflow-y-auto">
         <SheetHeader className="mb-4">
           <SheetTitle className="flex justify-between items-center">
-            Password History
+            Favorite Passwords
             <div className="flex space-x-2">
               <Button
                 variant="ghost"
@@ -97,11 +80,11 @@ const PasswordHistory: React.FC<PasswordHistoryProps> = ({
               >
                 {showPasswords ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </Button>
-              {history.length > 0 && (
+              {favorites.length > 0 && (
                 <Button
                   variant="destructive"
                   size="sm"
-                  onClick={onClearHistory}
+                  onClick={onClearFavorites}
                   className="h-8 px-2"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -111,13 +94,13 @@ const PasswordHistory: React.FC<PasswordHistoryProps> = ({
           </SheetTitle>
         </SheetHeader>
 
-        {history.length === 0 ? (
+        {favorites.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-40">
-            <p className="text-muted-foreground text-sm">No password history yet</p>
+            <p className="text-muted-foreground text-sm">No favorite passwords yet</p>
           </div>
         ) : (
           <div className="space-y-3">
-            {history.map((item, index) => (
+            {favorites.map((item, index) => (
               <div
                 key={index}
                 className="p-3 border rounded-md bg-secondary/20 relative group"
@@ -160,11 +143,10 @@ const PasswordHistory: React.FC<PasswordHistoryProps> = ({
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => onAddToFavorites(item)}
-                      className={`h-7 px-2 ${isInFavorites(item.password) ? 'text-red-500' : 'text-muted-foreground hover:text-foreground'}`}
-                      disabled={isInFavorites(item.password)}
+                      onClick={() => onRemoveFromFavorites(index)}
+                      className="h-7 px-2 text-destructive hover:text-destructive/80"
                     >
-                      <Heart className="h-3.5 w-3.5" fill={isInFavorites(item.password) ? "currentColor" : "none"} />
+                      <Trash2 className="h-3.5 w-3.5" />
                     </Button>
                     <Button
                       variant="ghost"
@@ -189,4 +171,4 @@ const PasswordHistory: React.FC<PasswordHistoryProps> = ({
   );
 };
 
-export default PasswordHistory;
+export default PasswordFavorites;
