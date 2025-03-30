@@ -22,13 +22,15 @@ import {
 import { toast } from "sonner";
 import { convertToLeetSpeak, createMixedPassword } from "@/utils/leetSpeakConverter";
 import { generatePronounceablePassword } from "@/utils/pronounceableGenerator";
-
-// Import the components
 import PasswordHistory from "./PasswordHistory";
 import PasswordFavorites from "./PasswordFavorites";
 import PasswordCategories from "./PasswordCategories";
 import PasswordStrengthAnalyzer from "./PasswordStrengthAnalyzer";
 import PasswordExportImport from "./PasswordExportImport";
+import PasswordQRCode from "./PasswordQRCode";
+import PasswordExpiryTimer from "./PasswordExpiryTimer";
+import KeyboardShortcuts from "./KeyboardShortcuts";
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 
 interface PasswordSettings {
   length: number;
@@ -61,12 +63,10 @@ const PasswordGenerator = () => {
   const [copied, setCopied] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<"weak" | "moderate" | "strong" | "very-strong">("strong");
   
-  // For leet speak converter tab
   const [baseText, setBaseText] = useState("");
   const [leetPassword, setLeetPassword] = useState("");
   const [activeTab, setActiveTab] = useState("random");
 
-  // New state for added features
   const [passwordHistory, setPasswordHistory] = useState<Array<{
     password: string;
     timestamp: Date;
@@ -85,7 +85,6 @@ const PasswordGenerator = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  // Character sets
   const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
   const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const numberChars = "0123456789";
@@ -121,7 +120,6 @@ const PasswordGenerator = () => {
 
   const generateRandomPassword = () => {
     try {
-      // If pronounceable password option is selected
       if (settings.usePronounceable) {
         const pronounceablePassword = generatePronounceablePassword(
           settings.length,
@@ -138,7 +136,6 @@ const PasswordGenerator = () => {
         return;
       }
       
-      // Ensure at least one character type is selected
       if (
         !settings.includeLowercase &&
         !settings.includeUppercase &&
@@ -172,7 +169,6 @@ const PasswordGenerator = () => {
         mustIncludeChars.push(symbolChars.charAt(Math.floor(Math.random() * symbolChars.length)));
       }
 
-      // Remove ambiguous characters if option is selected
       if (settings.excludeAmbiguous) {
         for (const char of ambiguousChars) {
           availableChars = availableChars.replace(char, "");
@@ -182,18 +178,13 @@ const PasswordGenerator = () => {
       let result = "";
       const length = settings.length;
 
-      // Generate the password
       if (settings.requireAllTypes && mustIncludeChars.length > 0) {
-        // First add one character from each required type
         result = mustIncludeChars.join("");
         
-        // Then fill the rest randomly
         for (let i = result.length; i < length; i++) {
           const nextChar = availableChars.charAt(Math.floor(Math.random() * availableChars.length));
           
-          // Check if we should avoid repeating characters
           if (settings.avoidRepeating && result.includes(nextChar)) {
-            // Try to find a non-repeating character (max 10 attempts to avoid infinite loop)
             let attemptCount = 0;
             let uniqueChar = nextChar;
             
@@ -208,10 +199,8 @@ const PasswordGenerator = () => {
           }
         }
         
-        // Shuffle the password to make it more random
         result = result.split("").sort(() => 0.5 - Math.random()).join("");
       } else {
-        // Generate completely random password
         for (let i = 0; i < length; i++) {
           const nextChar = availableChars.charAt(Math.floor(Math.random() * availableChars.length));
           
@@ -235,7 +224,6 @@ const PasswordGenerator = () => {
       const strength = calculatePasswordStrength(result);
       setPasswordStrength(strength);
       
-      // Don't automatically add to history, user will manually add favorites
       toast.success("Password generated successfully!");
     } catch (error) {
       console.error("Password generation error:", error);
@@ -249,7 +237,6 @@ const PasswordGenerator = () => {
       return;
     }
     
-    // Use the improved function that mixes leet text with random characters
     const mixedPassword = createMixedPassword(
       baseText,
       settings.length,
@@ -264,7 +251,6 @@ const PasswordGenerator = () => {
     const strength = calculatePasswordStrength(mixedPassword);
     setPasswordStrength(strength);
     
-    // Don't automatically add to history
     toast.success("Password created successfully!");
   };
 
@@ -308,13 +294,11 @@ const PasswordGenerator = () => {
     type: "random" | "leet";
     category?: string;
   }) => {
-    // Check if password already exists in favorites
     if (passwordFavorites.some(item => item.password === passwordItem.password)) {
       toast.info("Password already in favorites");
       return;
     }
 
-    // Add to favorites with category
     setPasswordFavorites(prev => [
       {
         ...passwordItem,
@@ -332,14 +316,13 @@ const PasswordGenerator = () => {
   };
 
   const handleImportPasswords = (importedPasswords: Array<any>) => {
-    // Merge imported passwords with existing ones, avoiding duplicates
     const existingPasswords = new Set(passwordHistory.map(p => p.password));
     const newPasswords = importedPasswords.filter(p => !existingPasswords.has(p.password));
     
     setPasswordHistory(prev => [
       ...newPasswords,
       ...prev
-    ].slice(0, 100)); // Limit to 100 passwords total
+    ].slice(0, 100));
   };
 
   const addCurrentPasswordToFavorites = () => {
@@ -350,7 +333,6 @@ const PasswordGenerator = () => {
       return;
     }
 
-    // Add to favorites without adding to history
     addToFavorites({
       password: currentPassword,
       timestamp: new Date(),
@@ -368,7 +350,6 @@ const PasswordGenerator = () => {
       return;
     }
 
-    // Add to history
     setPasswordHistory(prev => [
       {
         password: currentPassword,
@@ -377,18 +358,71 @@ const PasswordGenerator = () => {
         type: activeTab as "random" | "leet",
         category: selectedCategory || "uncategorized"
       },
-      ...prev.slice(0, 19) // Keep only the 20 most recent passwords
+      ...prev.slice(0, 19)
     ]);
     
     toast.success("Added to history");
   };
+
+  const handlePasswordExpiry = () => {
+    if (activeTab === "random") {
+      setPassword("");
+    } else {
+      setLeetPassword("");
+    }
+  };
+
+  const shortcuts = [
+    {
+      key: "g",
+      description: "Generate new password",
+      action: () => {
+        if (activeTab === "random") {
+          generateRandomPassword();
+        } else {
+          generateLeetPassword();
+        }
+      }
+    },
+    {
+      key: "c",
+      description: "Copy password to clipboard",
+      action: copyToClipboard
+    },
+    {
+      key: "s",
+      description: "Toggle password visibility",
+      action: () => setShowPassword(!showPassword)
+    },
+    {
+      key: "f",
+      description: "Add to favorites",
+      action: addCurrentPasswordToFavorites
+    },
+    {
+      key: "h",
+      description: "Save to history",
+      action: saveToHistory
+    },
+    {
+      key: "1",
+      description: "Switch to Random tab",
+      action: () => setActiveTab("random")
+    },
+    {
+      key: "2",
+      description: "Switch to Text to Password tab",
+      action: () => setActiveTab("leet")
+    }
+  ];
+
+  const { isListening, toggleListening } = useKeyboardShortcuts(shortcuts);
 
   useEffect(() => {
     // Empty useEffect to avoid automatic password generation
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // The current password being displayed
   const currentPassword = activeTab === "random" ? password : leetPassword;
 
   return (
@@ -416,7 +450,6 @@ const PasswordGenerator = () => {
               <TabsTrigger value="leet" className="text-sm">Text to Password</TabsTrigger>
             </TabsList>
             
-            {/* Password Display & Controls - Moved to top */}
             <div className="w-full">
               <div className="flex justify-between items-center mb-3">
                 <div className="flex space-x-2">
@@ -446,6 +479,11 @@ const PasswordGenerator = () => {
                   <PasswordStrengthAnalyzer password={currentPassword} />
                 </div>
                 <div className="flex space-x-2">
+                  <KeyboardShortcuts 
+                    shortcuts={shortcuts}
+                    isEnabled={isListening}
+                    onToggle={toggleListening}
+                  />
                   <PasswordExportImport 
                     passwordHistory={passwordHistory}
                     onImport={handleImportPasswords}
@@ -486,6 +524,11 @@ const PasswordGenerator = () => {
                       <PasswordCategories 
                         onSelectCategory={setSelectedCategory}
                         selectedCategory={selectedCategory}
+                      />
+                      <PasswordQRCode password={password} />
+                      <PasswordExpiryTimer 
+                        password={password}
+                        onPasswordExpiry={handlePasswordExpiry} 
                       />
                     </div>
                     <div className="flex gap-2">
@@ -565,6 +608,11 @@ const PasswordGenerator = () => {
                             onSelectCategory={setSelectedCategory}
                             selectedCategory={selectedCategory}
                           />
+                          <PasswordQRCode password={leetPassword} />
+                          <PasswordExpiryTimer 
+                            password={leetPassword}
+                            onPasswordExpiry={handlePasswordExpiry} 
+                          />
                         </div>
                         <div className="flex gap-2">
                           <Button
@@ -591,7 +639,6 @@ const PasswordGenerator = () => {
                 </div>
               )}
               
-              {/* Password Strength Indicator */}
               <div className="mb-6">
                 <div className="flex justify-between text-sm mb-1.5">
                   <span className="text-xs font-medium">Password Strength</span>
@@ -611,7 +658,6 @@ const PasswordGenerator = () => {
             </div>
             
             <TabsContent value="random" className="space-y-4 mt-0">
-              {/* Length Control */}
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <Label htmlFor="password-length" className="text-xs font-medium">Password Length</Label>
@@ -630,7 +676,6 @@ const PasswordGenerator = () => {
               
               <Separator className="my-4" />
               
-              {/* Character Types */}
               <div className="space-y-3">
                 <h3 className="text-sm font-medium">Character Types</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -679,7 +724,6 @@ const PasswordGenerator = () => {
                     />
                   </div>
                   
-                  {/* New Pronounceable option */}
                   <div className="flex items-center justify-between space-x-2">
                     <Label htmlFor="pronounceable" className="text-xs">Pronounceable Password</Label>
                     <Switch
@@ -693,7 +737,6 @@ const PasswordGenerator = () => {
               
               <Separator className="my-4" />
               
-              {/* Advanced Options */}
               <div className="space-y-3">
                 <h3 className="text-sm font-medium">Advanced Options</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -727,7 +770,6 @@ const PasswordGenerator = () => {
                   We'll mix it with random characters to reach your desired length.
                 </p>
                 
-                {/* Length Control (same as in random tab) */}
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <Label htmlFor="leet-password-length" className="text-xs font-medium">Password Length</Label>
@@ -746,7 +788,6 @@ const PasswordGenerator = () => {
                 
                 <Separator className="my-4" />
                 
-                {/* Character Types for random part */}
                 <div className="space-y-3">
                   <h3 className="text-sm font-medium">Character Types (for random part)</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -802,7 +843,6 @@ const PasswordGenerator = () => {
           
           <Separator />
           
-          {/* Security Tips */}
           <Collapsible
             open={securityTipsOpen}
             onOpenChange={setSecurityTipsOpen}
@@ -828,6 +868,8 @@ const PasswordGenerator = () => {
                 <li>Use unique passwords for each account</li>
                 <li>Consider using a password manager</li>
                 <li>Pronounceable passwords can be easier to remember but may be less secure</li>
+                <li>Use keyboard shortcuts to quickly generate passwords</li>
+                <li>Set expiry timers for temporary passwords</li>
               </ul>
             </CollapsibleContent>
           </Collapsible>
