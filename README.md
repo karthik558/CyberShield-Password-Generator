@@ -44,6 +44,11 @@ CyberKeyGen is a modern, secure password generator that helps you create strong,
   - Export/Import functionality
   - Security tips and recommendations
   - Cross-browser compatibility
+  - Progressive Web App (PWA) support 🆕
+  - Share passwords via QR code 🆕
+  - Keyboard shortcuts for quick access 🆕
+  - Password Expiration timer 🆕
+  - Pronuncable password generation 🆕
 
 ## Screenshots
 
@@ -118,7 +123,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | Password Strength | ✅     |
 | Dark Mode         | ✅     |
 | Mobile Support    | ✅     |
-| PWA Support       | 🚧     |
+| PWA Support       | ✅     |
 | Browser Extension | 📅     |
 
 </div>
