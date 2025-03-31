@@ -17,11 +17,13 @@ import {
   ChevronDown,
   Info,
   ShieldCheck,
-  Heart
+  Heart,
+  Pin
 } from "lucide-react";
 import { toast } from "sonner";
 import { convertToLeetSpeak, createMixedPassword } from "@/utils/leetSpeakConverter";
 import { generatePronounceablePassword } from "@/utils/pronounceableGenerator";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import PasswordHistory from "./PasswordHistory";
 import PasswordFavorites from "./PasswordFavorites";
 import PasswordCategories from "./PasswordCategories";
@@ -44,6 +46,11 @@ interface PasswordSettings {
   usePronounceable: boolean;
 }
 
+interface PinSettings {
+  length: number;
+  avoidRepeating: boolean;
+}
+
 const PasswordGenerator = () => {
   const [settings, setSettings] = useState<PasswordSettings>({
     length: 16,
@@ -57,6 +64,11 @@ const PasswordGenerator = () => {
     usePronounceable: false,
   });
 
+  const [pinSettings, setPinSettings] = useState<PinSettings>({
+    length: 6,
+    avoidRepeating: false,
+  });
+
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
   const [securityTipsOpen, setSecurityTipsOpen] = useState(false);
@@ -66,12 +78,13 @@ const PasswordGenerator = () => {
   const [baseText, setBaseText] = useState("");
   const [leetPassword, setLeetPassword] = useState("");
   const [activeTab, setActiveTab] = useState("random");
+  const [pin, setPin] = useState("");
 
   const [passwordHistory, setPasswordHistory] = useState<Array<{
     password: string;
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
+    type: "random" | "leet" | "pin";
     category?: string;
   }>>([]);
 
@@ -79,7 +92,7 @@ const PasswordGenerator = () => {
     password: string;
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
+    type: "random" | "leet" | "pin";
     category?: string;
   }>>([]);
 
@@ -254,8 +267,41 @@ const PasswordGenerator = () => {
     toast.success("Password created successfully!");
   };
 
+  const generatePin = () => {
+    try {
+      const length = pinSettings.length;
+      let result = "";
+      
+      for (let i = 0; i < length; i++) {
+        const nextDigit = Math.floor(Math.random() * 10).toString();
+        
+        if (pinSettings.avoidRepeating && result.includes(nextDigit)) {
+          let attemptCount = 0;
+          let uniqueDigit = nextDigit;
+          
+          while (result.includes(uniqueDigit) && attemptCount < 10) {
+            uniqueDigit = Math.floor(Math.random() * 10).toString();
+            attemptCount++;
+          }
+          
+          result += uniqueDigit;
+        } else {
+          result += nextDigit;
+        }
+      }
+      
+      setPin(result);
+      setPasswordStrength(length < 6 ? "weak" : length < 8 ? "moderate" : "strong");
+      toast.success("PIN generated successfully!");
+    } catch (error) {
+      console.error("PIN generation error:", error);
+      toast.error("Failed to generate PIN");
+    }
+  };
+
   const copyToClipboard = () => {
-    let textToCopy = activeTab === "random" ? password : leetPassword;
+    let textToCopy = activeTab === "random" ? password : 
+                    activeTab === "leet" ? leetPassword : pin;
     
     if (!textToCopy) {
       toast.error("Generate a password first!");
@@ -291,7 +337,7 @@ const PasswordGenerator = () => {
     password: string;
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
+    type: "random" | "leet" | "pin";
     category?: string;
   }) => {
     if (passwordFavorites.some(item => item.password === passwordItem.password)) {
@@ -326,7 +372,8 @@ const PasswordGenerator = () => {
   };
 
   const addCurrentPasswordToFavorites = () => {
-    const currentPassword = activeTab === "random" ? password : leetPassword;
+    const currentPassword = activeTab === "random" ? password : 
+                           activeTab === "leet" ? leetPassword : pin;
     
     if (!currentPassword) {
       toast.error("Generate a password first!");
@@ -337,13 +384,14 @@ const PasswordGenerator = () => {
       password: currentPassword,
       timestamp: new Date(),
       strength: passwordStrength,
-      type: activeTab as "random" | "leet",
+      type: activeTab as "random" | "leet" | "pin",
       category: selectedCategory || "uncategorized"
     });
   };
 
   const saveToHistory = () => {
-    const currentPassword = activeTab === "random" ? password : leetPassword;
+    const currentPassword = activeTab === "random" ? password : 
+                           activeTab === "leet" ? leetPassword : pin;
     
     if (!currentPassword) {
       toast.error("Generate a password first!");
@@ -355,7 +403,7 @@ const PasswordGenerator = () => {
         password: currentPassword,
         timestamp: new Date(),
         strength: passwordStrength,
-        type: activeTab as "random" | "leet",
+        type: activeTab as "random" | "leet" | "pin",
         category: selectedCategory || "uncategorized"
       },
       ...prev.slice(0, 19)
@@ -367,31 +415,35 @@ const PasswordGenerator = () => {
   const handlePasswordExpiry = () => {
     if (activeTab === "random") {
       setPassword("");
-    } else {
+    } else if (activeTab === "leet") {
       setLeetPassword("");
+    } else {
+      setPin("");
     }
   };
 
   const shortcuts = [
     {
       key: "g",
-      description: "Generate new password",
+      description: "Generate new password/PIN",
       action: () => {
         if (activeTab === "random") {
           generateRandomPassword();
-        } else {
+        } else if (activeTab === "leet") {
           generateLeetPassword();
+        } else {
+          generatePin();
         }
       }
     },
     {
       key: "c",
-      description: "Copy password to clipboard",
+      description: "Copy to clipboard",
       action: copyToClipboard
     },
     {
       key: "s",
-      description: "Toggle password visibility",
+      description: "Toggle visibility",
       action: () => setShowPassword(!showPassword)
     },
     {
@@ -413,6 +465,11 @@ const PasswordGenerator = () => {
       key: "2",
       description: "Switch to Text to Password tab",
       action: () => setActiveTab("leet")
+    },
+    {
+      key: "3",
+      description: "Switch to PIN Generator tab",
+      action: () => setActiveTab("pin")
     }
   ];
 
@@ -423,7 +480,8 @@ const PasswordGenerator = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const currentPassword = activeTab === "random" ? password : leetPassword;
+  const currentPassword = activeTab === "random" ? password : 
+                         activeTab === "leet" ? leetPassword : pin;
 
   return (
     <div className="w-full max-w-3xl mx-auto">
@@ -445,9 +503,10 @@ const PasswordGenerator = () => {
             onValueChange={(value) => setActiveTab(value)}
             value={activeTab}
           >
-            <TabsList className="grid w-full grid-cols-2 mb-6">
+            <TabsList className="grid w-full grid-cols-3 mb-6">
               <TabsTrigger value="random" className="text-sm">Random Password</TabsTrigger>
               <TabsTrigger value="leet" className="text-sm">Text to Password</TabsTrigger>
+              <TabsTrigger value="pin" className="text-sm">PIN Generator</TabsTrigger>
             </TabsList>
             
             <div className="w-full">
@@ -552,7 +611,7 @@ const PasswordGenerator = () => {
                     </div>
                   </div>
                 </div>
-              ) : (
+              ) : activeTab === "leet" ? (
                 <div className="space-y-4 mb-6">
                   <div className="flex gap-3 items-end">
                     <div className="flex-1">
@@ -636,6 +695,90 @@ const PasswordGenerator = () => {
                       </div>
                     </div>
                   )}
+                </div>
+              ) : (
+                <div className="space-y-4 mb-6">
+                  <div className="relative bg-secondary/30 border rounded-md p-3">
+                    <div className="flex flex-col items-center space-y-4">
+                      <div className="w-full flex items-center justify-center space-x-2 my-2">
+                        <InputOTP 
+                          maxLength={pinSettings.length}
+                          value={pin}
+                          render={({ slots }) => (
+                            <InputOTPGroup>
+                              {slots.map((slot, index) => (
+                                <InputOTPSlot 
+                                  key={index} 
+                                  {...slot} 
+                                  index={index} 
+                                  className="w-10 h-12 text-lg"
+                                />
+                              ))}
+                            </InputOTPGroup>
+                          )}
+                        />
+                      </div>
+                      
+                      <div className="flex items-center space-x-2 w-full">
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={copyToClipboard}
+                          className="flex-shrink-0"
+                        >
+                          {copied ? <CheckIcon className="h-5 w-5 text-green-500" /> : <ClipboardCopy className="h-5 w-5" />}
+                        </Button>
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          value={pin}
+                          placeholder="Click 'Generate' to create a PIN"
+                          readOnly
+                          className="text-lg font-mono border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 h-12 px-3 placeholder:font-sans placeholder:text-base"
+                        />
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="flex-shrink-0"
+                        >
+                          {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between gap-2 mt-3">
+                      <div className="flex gap-2">
+                        <PasswordCategories 
+                          onSelectCategory={setSelectedCategory}
+                          selectedCategory={selectedCategory}
+                        />
+                        <PasswordQRCode password={pin} />
+                        <PasswordExpiryTimer 
+                          password={pin}
+                          onPasswordExpiry={handlePasswordExpiry} 
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          onClick={addCurrentPasswordToFavorites}
+                          className="h-9"
+                          size="sm"
+                        >
+                          <Heart className="mr-2 h-4 w-4" />
+                          Save
+                        </Button>
+                        <Button
+                          onClick={generatePin}
+                          className="h-9"
+                          size="sm"
+                        >
+                          <RefreshCw className="mr-2 h-4 w-4" />
+                          Generate
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
               
@@ -839,6 +982,46 @@ const PasswordGenerator = () => {
                 </div>
               </div>
             </TabsContent>
+            
+            <TabsContent value="pin" className="space-y-4 mt-0">
+              <div className="space-y-4">
+                <p className="text-xs text-muted-foreground">
+                  Generate a secure PIN code with your desired length. Great for device unlock codes, ATM PINs, and other numeric access needs.
+                </p>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <Label htmlFor="pin-length" className="text-xs font-medium">PIN Length</Label>
+                    <span className="font-mono text-xs">{pinSettings.length}</span>
+                  </div>
+                  <Slider
+                    id="pin-length"
+                    min={4}
+                    max={12}
+                    step={1}
+                    value={[pinSettings.length]}
+                    onValueChange={(value) => setPinSettings({ ...pinSettings, length: value[0] })}
+                    className="py-2"
+                  />
+                </div>
+                
+                <Separator className="my-4" />
+                
+                <div className="space-y-3">
+                  <h3 className="text-sm font-medium">PIN Options</h3>
+                  <div className="grid grid-cols-1 gap-3">
+                    <div className="flex items-center justify-between space-x-2">
+                      <Label htmlFor="avoid-repeating-pin" className="text-xs">Avoid Repeating Digits</Label>
+                      <Switch
+                        id="avoid-repeating-pin"
+                        checked={pinSettings.avoidRepeating}
+                        onCheckedChange={(checked) => setPinSettings({ ...pinSettings, avoidRepeating: checked })}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
           </Tabs>
           
           <Separator />
@@ -870,6 +1053,8 @@ const PasswordGenerator = () => {
                 <li>Pronounceable passwords can be easier to remember but may be less secure</li>
                 <li>Use keyboard shortcuts to quickly generate passwords</li>
                 <li>Set expiry timers for temporary passwords</li>
+                <li>For PINs, avoid common sequences like 1234 or 0000</li>
+                <li>Longer PINs (8+ digits) provide much better security</li>
               </ul>
             </CollapsibleContent>
           </Collapsible>
