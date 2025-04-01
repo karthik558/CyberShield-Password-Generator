@@ -709,7 +709,7 @@ const PasswordGenerator = () => {
                       <div className="w-full flex items-center justify-center">
                         {pin ? (
                           <div className="flex flex-wrap justify-center gap-1 max-w-full overflow-hidden">
-                            {Array.from({ length: Math.min(pinSettings.length, 8) }).map((_, index) => (
+                            {pin.split('').map((digit, index) => (
                               <div
                                 key={index}
                                 className="h-12 w-10 flex items-center justify-center relative"
@@ -717,17 +717,10 @@ const PasswordGenerator = () => {
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-md border border-primary/20 shadow-sm" />
                                 <div className="absolute inset-0 backdrop-blur-sm rounded-md" />
                                 <span className="relative text-xl font-semibold z-10">
-                                  {showPassword ? pin[index] || '' : '•'}
+                                  {showPassword ? digit : '•'}
                                 </span>
                               </div>
                             ))}
-                            {pinSettings.length > 8 && (
-                              <div className="h-12 px-2 flex items-center justify-center relative">
-                                <span className="text-sm font-medium text-muted-foreground">
-                                  +{pinSettings.length - 8}
-                                </span>
-                              </div>
-                            )}
                           </div>
                         ) : (
                           <div className="py-3 px-2">
