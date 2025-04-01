@@ -81,7 +81,7 @@ const PasswordGenerator = () => {
   const [leetPassword, setLeetPassword] = useState("");
   const [activeTab, setActiveTab] = useState("random");
   const [pin, setPin] = useState("");
-  const [isMobile] = useIsMobile();
+  const isMobile = useIsMobile();
 
   const [passwordHistory, setPasswordHistory] = useState<Array<{
     password: string;
