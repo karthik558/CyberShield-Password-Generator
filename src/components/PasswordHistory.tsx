@@ -25,7 +25,7 @@ interface PasswordHistoryProps {
     password: string;
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
+    type: "random" | "leet" | "pin";
     category?: string;
   }>;
   onClearHistory: () => void;
@@ -34,14 +34,14 @@ interface PasswordHistoryProps {
     password: string;
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
+    type: "random" | "leet" | "pin";
     category?: string;
   }) => void;
   favorites: Array<{
     password: string;
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
+    type: "random" | "leet" | "pin";
     category?: string;
   }>;
 }

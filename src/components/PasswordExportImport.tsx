@@ -1,17 +1,21 @@
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Download, Upload, FileJson, CheckIcon } from "lucide-react";
+import { 
+  Download, 
+  Upload, 
+  FileJson,
+  CheckIcon
+} from "lucide-react";
 import { toast } from "sonner";
 
 interface PasswordExportImportProps {
@@ -19,9 +23,16 @@ interface PasswordExportImportProps {
     password: string;
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
+    type: "random" | "leet" | "pin";
+    category?: string;
   }>;
-  onImport: (passwords: Array<any>) => void;
+  onImport: (passwords: Array<{
+    password: string;
+    timestamp: Date;
+    strength: "weak" | "moderate" | "strong" | "very-strong";
+    type: "random" | "leet" | "pin";
+    category?: string;
+  }>) => void;
 }
 
 const PasswordExportImport: React.FC<PasswordExportImportProps> = ({

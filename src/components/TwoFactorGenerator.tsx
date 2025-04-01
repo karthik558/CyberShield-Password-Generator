@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -112,12 +111,9 @@ const TwoFactorGenerator = () => {
                 <div className="flex justify-center py-4">
                   <InputOTP maxLength={6} value={code} readOnly>
                     <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
+                      {code.split('').map((_, index) => (
+                        <InputOTPSlot key={index} index={index} />
+                      ))}
                     </InputOTPGroup>
                   </InputOTP>
                 </div>

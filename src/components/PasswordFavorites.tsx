@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React from "react";
 import { 
   Sheet, 
   SheetContent, 
@@ -10,10 +9,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { 
   ClipboardCopy, 
-  Heart, 
+  BookmarkCheck, 
   Trash2, 
   Eye, 
   EyeOff,
+  X,
   CheckIcon,
   Tag
 } from "lucide-react";
@@ -24,7 +24,7 @@ interface PasswordFavoritesProps {
     password: string;
     timestamp: Date;
     strength: "weak" | "moderate" | "strong" | "very-strong";
-    type: "random" | "leet";
+    type: "random" | "leet" | "pin";
     category?: string;
   }>;
   onClearFavorites: () => void;
@@ -38,8 +38,8 @@ const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
   onCopyPassword,
   onRemoveFromFavorites
 }) => {
-  const [showPasswords, setShowPasswords] = useState(false);
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [showPasswords, setShowPasswords] = React.useState(false);
+  const [copiedIndex, setCopiedIndex] = React.useState<number | null>(null);
 
   const handleCopy = (password: string, index: number) => {
     onCopyPassword(password);
@@ -61,7 +61,7 @@ const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon" className="mr-2 relative">
-          <Heart className="h-4 w-4" fill={favorites.length > 0 ? "currentColor" : "none"} />
+          <BookmarkCheck className="h-4 w-4" />
           {favorites.length > 0 && (
             <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center">
               {favorites.length}
@@ -69,7 +69,7 @@ const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto">
+      <SheetContent className="overflow-y-auto bg-background text-foreground">
         <SheetHeader className="mb-4">
           <SheetTitle className="flex justify-between items-center">
             Favorite Passwords
@@ -153,14 +153,6 @@ const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => onRemoveFromFavorites(index)}
-                      className="h-7 px-2 text-destructive hover:text-destructive/80"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
                       onClick={() => handleCopy(item.password, index)}
                       className="h-7 px-2"
                     >
@@ -169,6 +161,14 @@ const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
                       ) : (
                         <ClipboardCopy className="h-3.5 w-3.5" />
                       )}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onRemoveFromFavorites(index)}
+                      className="h-7 px-2 text-muted-foreground hover:text-foreground"
+                    >
+                      <X className="h-3.5 w-3.5" />
                     </Button>
                   </div>
                 </div>
