@@ -33,6 +33,8 @@ import PasswordQRCode from "./PasswordQRCode";
 import PasswordExpiryTimer from "./PasswordExpiryTimer";
 import KeyboardShortcuts from "./KeyboardShortcuts";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
+import { useIsMobile } from "@/hooks/use-mobile";
+import TwoFactorGenerator from "./TwoFactorGenerator";
 
 interface PasswordSettings {
   length: number;
@@ -79,6 +81,7 @@ const PasswordGenerator = () => {
   const [leetPassword, setLeetPassword] = useState("");
   const [activeTab, setActiveTab] = useState("random");
   const [pin, setPin] = useState("");
+  const [isMobile] = useIsMobile();
 
   const [passwordHistory, setPasswordHistory] = useState<Array<{
     password: string;
@@ -510,8 +513,8 @@ const PasswordGenerator = () => {
             </TabsList>
             
             <div className="w-full">
-              <div className="flex justify-between items-center mb-3">
-                <div className="flex space-x-2">
+              <div className={`flex ${isMobile ? 'flex-col gap-3' : 'justify-between items-center'} mb-3`}>
+                <div className={`flex ${isMobile ? 'justify-center' : ''} space-x-2`}>
                   <PasswordHistory 
                     history={passwordHistory}
                     onClearHistory={clearHistory}
@@ -537,7 +540,7 @@ const PasswordGenerator = () => {
                   />
                   <PasswordStrengthAnalyzer password={currentPassword} />
                 </div>
-                <div className="flex space-x-2">
+                <div className={`flex ${isMobile ? 'justify-center' : ''} space-x-2`}>
                   <KeyboardShortcuts 
                     shortcuts={shortcuts}
                     isEnabled={isListening}
@@ -547,6 +550,7 @@ const PasswordGenerator = () => {
                     passwordHistory={passwordHistory}
                     onImport={handleImportPasswords}
                   />
+                  <TwoFactorGenerator />
                 </div>
               </div>
               
@@ -578,8 +582,8 @@ const PasswordGenerator = () => {
                     </Button>
                   </div>
                   
-                  <div className="flex justify-between gap-2 mt-3">
-                    <div className="flex gap-2">
+                  <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'justify-between'} ${isMobile ? 'mt-3' : 'gap-2 mt-3'}`}>
+                    <div className={`flex ${isMobile ? 'justify-center' : ''} gap-2`}>
                       <PasswordCategories 
                         onSelectCategory={setSelectedCategory}
                         selectedCategory={selectedCategory}
@@ -590,7 +594,7 @@ const PasswordGenerator = () => {
                         onPasswordExpiry={handlePasswordExpiry} 
                       />
                     </div>
-                    <div className="flex gap-2">
+                    <div className={`flex ${isMobile ? 'justify-center' : ''} gap-2`}>
                       <Button
                         variant="outline"
                         onClick={addCurrentPasswordToFavorites}
@@ -613,7 +617,7 @@ const PasswordGenerator = () => {
                 </div>
               ) : activeTab === "leet" ? (
                 <div className="space-y-4 mb-6">
-                  <div className="flex gap-3 items-end">
+                  <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'gap-3 items-end'}`}>
                     <div className="flex-1">
                       <Label htmlFor="base-text" className="text-xs font-medium mb-1.5 block">Enter text to convert</Label>
                       <Input
@@ -626,7 +630,7 @@ const PasswordGenerator = () => {
                     </div>
                     <Button
                       onClick={generateLeetPassword}
-                      className="h-12"
+                      className={`h-12 ${isMobile ? 'w-full' : ''}`}
                     >
                       <RefreshCw className="mr-2 h-4 w-4" />
                       Generate
@@ -661,8 +665,8 @@ const PasswordGenerator = () => {
                         </Button>
                       </div>
                       
-                      <div className="flex justify-between gap-2 mt-3">
-                        <div className="flex gap-2">
+                      <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'justify-between'} ${isMobile ? 'mt-3' : 'gap-2 mt-3'}`}>
+                        <div className={`flex ${isMobile ? 'justify-center' : ''} gap-2`}>
                           <PasswordCategories 
                             onSelectCategory={setSelectedCategory}
                             selectedCategory={selectedCategory}
@@ -673,7 +677,7 @@ const PasswordGenerator = () => {
                             onPasswordExpiry={handlePasswordExpiry} 
                           />
                         </div>
-                        <div className="flex gap-2">
+                        <div className={`flex ${isMobile ? 'justify-center' : ''} gap-2`}>
                           <Button
                             variant="outline"
                             onClick={addCurrentPasswordToFavorites}
@@ -701,22 +705,39 @@ const PasswordGenerator = () => {
                   <div className="relative bg-secondary/30 border rounded-md p-3">
                     <div className="flex flex-col items-center space-y-4">
                       <div className="w-full flex items-center justify-center space-x-2 my-2">
-                        <InputOTP 
-                          maxLength={pinSettings.length}
-                          value={pin}
-                          render={({ slots }) => (
-                            <InputOTPGroup>
-                              {slots.map((slot, index) => (
-                                <InputOTPSlot 
-                                  key={index} 
-                                  {...slot} 
-                                  index={index} 
-                                  className="w-10 h-12 text-lg"
-                                />
-                              ))}
-                            </InputOTPGroup>
-                          )}
-                        />
+                        {pin ? (
+                          <div className="grid grid-flow-col gap-2 justify-center">
+                            {Array.from({ length: pinSettings.length }).map((_, index) => (
+                              <div
+                                key={index}
+                                className="relative h-14 w-12 flex items-center justify-center"
+                              >
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-md border border-primary/20 shadow-sm" />
+                                <div className="absolute inset-0 backdrop-blur-sm rounded-md" />
+                                <span className="relative text-2xl font-semibold z-10">
+                                  {showPassword ? pin[index] || '' : '•'}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <InputOTP 
+                            maxLength={pinSettings.length}
+                            value={pin}
+                            render={({ slots }) => (
+                              <InputOTPGroup>
+                                {slots.map((slot, index) => (
+                                  <InputOTPSlot 
+                                    key={index} 
+                                    {...slot} 
+                                    index={index} 
+                                    className="w-10 h-12 text-lg"
+                                  />
+                                ))}
+                              </InputOTPGroup>
+                            )}
+                          />
+                        )}
                       </div>
                       
                       <div className="flex items-center space-x-2 w-full">
@@ -746,8 +767,8 @@ const PasswordGenerator = () => {
                       </div>
                     </div>
                     
-                    <div className="flex justify-between gap-2 mt-3">
-                      <div className="flex gap-2">
+                    <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'justify-between'} ${isMobile ? 'mt-3' : 'gap-2 mt-3'}`}>
+                      <div className={`flex ${isMobile ? 'justify-center' : ''} gap-2`}>
                         <PasswordCategories 
                           onSelectCategory={setSelectedCategory}
                           selectedCategory={selectedCategory}
@@ -758,7 +779,7 @@ const PasswordGenerator = () => {
                           onPasswordExpiry={handlePasswordExpiry} 
                         />
                       </div>
-                      <div className="flex gap-2">
+                      <div className={`flex ${isMobile ? 'justify-center' : ''} gap-2`}>
                         <Button
                           variant="outline"
                           onClick={addCurrentPasswordToFavorites}
