@@ -19,6 +19,9 @@ CyberKeyGen is a modern, secure password generator that helps you create strong,
   - Multiple character sets for enhanced complexity
   - Real-time password strength assessment
   - Time-to-crack estimation
+  - Password history management
+  - Pronuncable password generation 🆕
+  - PIN code generation (4-12 digits) 🆕
 
 - 🎨 **Modern Interface**
   - Clean, intuitive user interface
@@ -48,7 +51,6 @@ CyberKeyGen is a modern, secure password generator that helps you create strong,
   - Share passwords via QR code 🆕
   - Keyboard shortcuts for quick access 🆕
   - Password Expiration timer 🆕
-  - Pronuncable password generation 🆕
 
 ## Screenshots
 
