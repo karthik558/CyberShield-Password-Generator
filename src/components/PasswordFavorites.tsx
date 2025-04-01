@@ -1,3 +1,4 @@
+
 import React from "react";
 import { 
   Sheet, 
@@ -18,6 +19,7 @@ import {
   Tag
 } from "lucide-react";
 import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PasswordFavoritesProps {
   favorites: Array<{
@@ -40,6 +42,7 @@ const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
 }) => {
   const [showPasswords, setShowPasswords] = React.useState(false);
   const [copiedIndex, setCopiedIndex] = React.useState<number | null>(null);
+  const isMobile = useIsMobile();
 
   const handleCopy = (password: string, index: number) => {
     onCopyPassword(password);
@@ -60,7 +63,7 @@ const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="mr-2 relative">
+        <Button variant="outline" size="icon" className="relative w-9 h-9 p-0">
           <BookmarkCheck className="h-4 w-4" />
           {favorites.length > 0 && (
             <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center">
@@ -73,7 +76,7 @@ const PasswordFavorites: React.FC<PasswordFavoritesProps> = ({
         <SheetHeader className="mb-4">
           <SheetTitle className="flex justify-between items-center">
             Favorite Passwords
-            <div className="flex space-x-2">
+            <div className="flex space-x-1">
               <Button
                 variant="ghost"
                 size="sm"

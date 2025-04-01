@@ -1,5 +1,7 @@
-import React, { useState, useRef } from "react";
+
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import ResponsiveIconButton from "@/components/ResponsiveIconButton";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +21,7 @@ import { toast } from "sonner";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PasswordExportImportProps {
   passwordHistory: Array<{
@@ -44,6 +47,7 @@ const PasswordExportImport: React.FC<PasswordExportImportProps> = ({
   const [importData, setImportData] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
   const [activeTab, setActiveTab] = useState("export");
+  const isMobile = useIsMobile();
   
   const handleExport = () => {
     if (passwordHistory.length === 0) {
@@ -100,10 +104,13 @@ const PasswordExportImport: React.FC<PasswordExportImportProps> = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="h-9">
-          <FileJson className="h-4 w-4 mr-2" />
-          Export/Import
-        </Button>
+        <ResponsiveIconButton 
+          variant="outline" 
+          size="sm" 
+          icon={<FileJson className="h-4 w-4" />}
+          text="Export/Import" 
+          className="h-9"
+        />
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
