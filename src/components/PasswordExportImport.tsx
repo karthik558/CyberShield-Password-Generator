@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +16,9 @@ import {
   CheckIcon
 } from "lucide-react";
 import { toast } from "sonner";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 interface PasswordExportImportProps {
   passwordHistory: Array<{
@@ -49,15 +51,12 @@ const PasswordExportImport: React.FC<PasswordExportImportProps> = ({
       return;
     }
     
-    // Create a JSON file of the password history
     const exportData = JSON.stringify(passwordHistory, null, 2);
     const blob = new Blob([exportData], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     
-    // Create a download link
     setDownloadUrl(url);
     
-    // Create a temporary anchor element and trigger download
     const a = document.createElement("a");
     a.href = url;
     a.download = `password-export-${new Date().toISOString().slice(0, 10)}.json`;
@@ -82,7 +81,6 @@ const PasswordExportImport: React.FC<PasswordExportImportProps> = ({
         return;
       }
       
-      // Validate the data structure
       const validatedData = parsedData.map(item => ({
         password: item.password || "",
         timestamp: new Date(item.timestamp || Date.now()),
