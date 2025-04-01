@@ -34,6 +34,7 @@ import PasswordExpiryTimer from "./PasswordExpiryTimer";
 import KeyboardShortcuts from "./KeyboardShortcuts";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useResponsiveGap } from "@/hooks/use-responsive-gap";
 
 interface PasswordSettings {
   length: number;
@@ -80,6 +81,7 @@ const PasswordGenerator = () => {
   const [leetPassword, setLeetPassword] = useState("");
   const [activeTab, setActiveTab] = useState("random");
   const [pin, setPin] = useState("");
+  const { gap } = useResponsiveGap();
   const isMobile = useIsMobile();
 
   const [passwordHistory, setPasswordHistory] = useState<Array<{
@@ -488,7 +490,7 @@ const PasswordGenerator = () => {
   return (
     <div className="w-full max-w-3xl mx-auto">
       <Card className="shadow-lg backdrop-blur-sm bg-card/90">
-        <CardHeader className="space-y-1 border-b pb-4">
+        <CardHeader className="space-y-1 border-b pb-3 pt-4">
           <CardTitle className="text-2xl font-medium tracking-tight text-center relative flex items-center justify-center">
             <ShieldCheck className="w-5 h-5 mr-2 text-primary" />
             Generate Secure Password
@@ -498,22 +500,22 @@ const PasswordGenerator = () => {
           </p>
         </CardHeader>
         
-        <CardContent className="space-y-6 pt-6">
+        <CardContent className="space-y-5 pt-5">
           <Tabs 
             defaultValue="random" 
             className="w-full"
             onValueChange={(value) => setActiveTab(value)}
             value={activeTab}
           >
-            <TabsList className="grid w-full grid-cols-3 mb-6">
+            <TabsList className="grid w-full grid-cols-3 mb-5">
               <TabsTrigger value="random" className="text-sm">Random Password</TabsTrigger>
               <TabsTrigger value="leet" className="text-sm">Text to Password</TabsTrigger>
               <TabsTrigger value="pin" className="text-sm">PIN Generator</TabsTrigger>
             </TabsList>
             
             <div className="w-full">
-              <div className={`flex ${isMobile ? 'flex-col gap-3' : 'justify-between items-center'} mb-3`}>
-                <div className={`flex ${isMobile ? 'justify-between w-full' : ''} space-x-2`}>
+              <div className="flex items-center justify-between mb-3">
+                <div className={`flex ${gap}`}>
                   <PasswordHistory 
                     history={passwordHistory}
                     onClearHistory={clearHistory}
@@ -539,7 +541,7 @@ const PasswordGenerator = () => {
                   />
                   <PasswordStrengthAnalyzer password={currentPassword} />
                 </div>
-                <div className={`flex ${isMobile ? 'justify-between w-full' : ''} space-x-2`}>
+                <div className={`flex ${gap}`}>
                   {!isMobile && (
                     <KeyboardShortcuts 
                       shortcuts={shortcuts}
@@ -555,35 +557,35 @@ const PasswordGenerator = () => {
               </div>
               
               {activeTab === "random" ? (
-                <div className="relative bg-secondary/30 border rounded-md p-3 mb-6">
+                <div className="relative bg-secondary/30 border rounded-md p-3 mb-4">
                   <div className="flex items-center space-x-2">
                     <Input
                       type={showPassword ? "text" : "password"}
                       value={password}
                       placeholder={password ? "" : "Click 'Generate' to create a password"}
                       readOnly
-                      className="text-lg font-mono border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 h-12 px-3 placeholder:font-sans placeholder:text-base"
+                      className="text-lg font-mono border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 h-10 px-3 placeholder:font-sans placeholder:text-base"
                     />
                     <Button 
                       variant="ghost" 
                       size="icon" 
                       onClick={() => setShowPassword(!showPassword)}
-                      className="flex-shrink-0"
+                      className="flex-shrink-0 h-8 w-8"
                     >
-                      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={copyToClipboard}
-                      className="flex-shrink-0"
+                      className="flex-shrink-0 h-8 w-8"
                     >
-                      {copied ? <CheckIcon className="h-5 w-5 text-green-500" /> : <ClipboardCopy className="h-5 w-5" />}
+                      {copied ? <CheckIcon className="h-4 w-4 text-green-500" /> : <ClipboardCopy className="h-4 w-4" />}
                     </Button>
                   </div>
                   
-                  <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'justify-between'} ${isMobile ? 'mt-3' : 'gap-2 mt-3'}`}>
-                    <div className={`flex ${isMobile ? 'justify-between w-full' : ''} gap-2`}>
+                  <div className="flex justify-between items-center mt-2">
+                    <div className={`flex ${gap}`}>
                       <PasswordCategories 
                         onSelectCategory={setSelectedCategory}
                         selectedCategory={selectedCategory}
@@ -594,30 +596,30 @@ const PasswordGenerator = () => {
                         onPasswordExpiry={handlePasswordExpiry} 
                       />
                     </div>
-                    <div className={`flex ${isMobile ? 'justify-between w-full' : ''} gap-2`}>
+                    <div className={`flex ${gap}`}>
                       <Button
                         variant="outline"
                         onClick={addCurrentPasswordToFavorites}
-                        className="h-9"
+                        className={`${isMobile ? "w-9 h-9 p-0" : "h-9"}`}
                         size="sm"
                       >
-                        <Heart className="mr-2 h-4 w-4" />
-                        Save
+                        <Heart className={`h-4 w-4 ${!isMobile && "mr-2"}`} />
+                        {!isMobile && "Save"}
                       </Button>
                       <Button
                         onClick={generateRandomPassword}
-                        className="h-9"
+                        className={`${isMobile ? "w-9 h-9 p-0" : "h-9"}`}
                         size="sm"
                       >
-                        <RefreshCw className="mr-2 h-4 w-4" />
-                        Generate
+                        <RefreshCw className={`h-4 w-4 ${!isMobile && "mr-2"}`} />
+                        {!isMobile && "Generate"}
                       </Button>
                     </div>
                   </div>
                 </div>
               ) : activeTab === "leet" ? (
-                <div className="space-y-4 mb-6">
-                  <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'gap-3 items-end'}`}>
+                <div className="space-y-4 mb-4">
+                  <div className="flex gap-2 items-end">
                     <div className="flex-1">
                       <Label htmlFor="base-text" className="text-xs font-medium mb-1.5 block">Enter text to convert</Label>
                       <Input
@@ -625,15 +627,15 @@ const PasswordGenerator = () => {
                         placeholder="Enter a word or phrase"
                         value={baseText}
                         onChange={(e) => setBaseText(e.target.value)}
-                        className="h-12"
+                        className="h-10"
                       />
                     </div>
                     <Button
                       onClick={generateLeetPassword}
-                      className={`h-12 ${isMobile ? 'w-full' : ''}`}
+                      className={`${isMobile ? "w-10 h-10 p-0" : "h-10"}`}
                     >
-                      <RefreshCw className="mr-2 h-4 w-4" />
-                      Generate
+                      <RefreshCw className={`h-4 w-4 ${!isMobile && "mr-2"}`} />
+                      {!isMobile && "Generate"}
                     </Button>
                   </div>
                   
@@ -645,28 +647,28 @@ const PasswordGenerator = () => {
                           type={showPassword ? "text" : "password"}
                           value={leetPassword}
                           readOnly
-                          className="text-lg font-mono border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 h-12 px-3"
+                          className="text-lg font-mono border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 h-10 px-3"
                         />
                         <Button 
                           variant="ghost" 
                           size="icon" 
                           onClick={() => setShowPassword(!showPassword)}
-                          className="flex-shrink-0"
+                          className="flex-shrink-0 h-8 w-8"
                         >
-                          {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
                           onClick={copyToClipboard}
-                          className="flex-shrink-0"
+                          className="flex-shrink-0 h-8 w-8"
                         >
-                          {copied ? <CheckIcon className="h-5 w-5 text-green-500" /> : <ClipboardCopy className="h-5 w-5" />}
+                          {copied ? <CheckIcon className="h-4 w-4 text-green-500" /> : <ClipboardCopy className="h-4 w-4" />}
                         </Button>
                       </div>
                       
-                      <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'justify-between'} ${isMobile ? 'mt-3' : 'gap-2 mt-3'}`}>
-                        <div className={`flex ${isMobile ? 'justify-between w-full' : ''} gap-2`}>
+                      <div className="flex justify-between items-center mt-2">
+                        <div className={`flex ${gap}`}>
                           <PasswordCategories 
                             onSelectCategory={setSelectedCategory}
                             selectedCategory={selectedCategory}
@@ -677,23 +679,23 @@ const PasswordGenerator = () => {
                             onPasswordExpiry={handlePasswordExpiry} 
                           />
                         </div>
-                        <div className={`flex ${isMobile ? 'justify-between w-full' : ''} gap-2`}>
+                        <div className={`flex ${gap}`}>
                           <Button
                             variant="outline"
                             onClick={addCurrentPasswordToFavorites}
-                            className="h-9"
+                            className={`${isMobile ? "w-9 h-9 p-0" : "h-9"}`}
                             size="sm"
                           >
-                            <Heart className="mr-2 h-4 w-4" />
-                            Save
+                            <Heart className={`h-4 w-4 ${!isMobile && "mr-2"}`} />
+                            {!isMobile && "Save"}
                           </Button>
                           <Button
                             onClick={generateLeetPassword}
-                            className="h-9"
+                            className={`${isMobile ? "w-9 h-9 p-0" : "h-9"}`}
                             size="sm"
                           >
-                            <RefreshCw className="mr-2 h-4 w-4" />
-                            Regenerate
+                            <RefreshCw className={`h-4 w-4 ${!isMobile && "mr-2"}`} />
+                            {!isMobile && "Regenerate"}
                           </Button>
                         </div>
                       </div>
@@ -701,27 +703,34 @@ const PasswordGenerator = () => {
                   )}
                 </div>
               ) : (
-                <div className="space-y-4 mb-6">
+                <div className="space-y-4 mb-4">
                   <div className="relative bg-secondary/30 border rounded-md p-3">
-                    <div className="flex flex-col items-center space-y-4">
-                      <div className="w-full flex items-center justify-center my-2">
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className="w-full flex items-center justify-center">
                         {pin ? (
-                          <div className="flex flex-wrap justify-center gap-2 max-w-full py-2">
-                            {Array.from({ length: pinSettings.length }).map((_, index) => (
+                          <div className="flex flex-wrap justify-center gap-1 max-w-full overflow-hidden">
+                            {Array.from({ length: Math.min(pinSettings.length, 8) }).map((_, index) => (
                               <div
                                 key={index}
-                                className="relative h-14 w-12 flex items-center justify-center"
+                                className="h-12 w-10 flex items-center justify-center relative"
                               >
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-md border border-primary/20 shadow-sm" />
                                 <div className="absolute inset-0 backdrop-blur-sm rounded-md" />
-                                <span className="relative text-2xl font-semibold z-10">
+                                <span className="relative text-xl font-semibold z-10">
                                   {showPassword ? pin[index] || '' : '•'}
                                 </span>
                               </div>
                             ))}
+                            {pinSettings.length > 8 && (
+                              <div className="h-12 px-2 flex items-center justify-center relative">
+                                <span className="text-sm font-medium text-muted-foreground">
+                                  +{pinSettings.length - 8}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         ) : (
-                          <div className="py-4 px-2">
+                          <div className="py-3 px-2">
                             <p className="text-muted-foreground text-center text-sm">
                               Generate a PIN to see it displayed here
                             </p>
@@ -734,30 +743,30 @@ const PasswordGenerator = () => {
                           variant="ghost" 
                           size="icon" 
                           onClick={copyToClipboard}
-                          className="flex-shrink-0"
+                          className="flex-shrink-0 h-8 w-8"
                         >
-                          {copied ? <CheckIcon className="h-5 w-5 text-green-500" /> : <ClipboardCopy className="h-5 w-5" />}
+                          {copied ? <CheckIcon className="h-4 w-4 text-green-500" /> : <ClipboardCopy className="h-4 w-4" />}
                         </Button>
                         <Input
                           type={showPassword ? "text" : "password"}
                           value={pin}
                           placeholder="Click 'Generate' to create a PIN"
                           readOnly
-                          className="text-lg font-mono border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 h-12 px-3 placeholder:font-sans placeholder:text-base"
+                          className="text-lg font-mono border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 h-10 px-3 placeholder:font-sans placeholder:text-base"
                         />
                         <Button 
                           variant="ghost" 
                           size="icon" 
                           onClick={() => setShowPassword(!showPassword)}
-                          className="flex-shrink-0"
+                          className="flex-shrink-0 h-8 w-8"
                         >
-                          {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </Button>
                       </div>
                     </div>
                     
-                    <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'justify-between'} ${isMobile ? 'mt-3' : 'gap-2 mt-3'}`}>
-                      <div className={`flex ${isMobile ? 'justify-between w-full' : ''} gap-2`}>
+                    <div className="flex justify-between items-center mt-2">
+                      <div className={`flex ${gap}`}>
                         <PasswordCategories 
                           onSelectCategory={setSelectedCategory}
                           selectedCategory={selectedCategory}
@@ -768,23 +777,23 @@ const PasswordGenerator = () => {
                           onPasswordExpiry={handlePasswordExpiry} 
                         />
                       </div>
-                      <div className={`flex ${isMobile ? 'justify-between w-full' : ''} gap-2`}>
+                      <div className={`flex ${gap}`}>
                         <Button
                           variant="outline"
                           onClick={addCurrentPasswordToFavorites}
-                          className="h-9"
+                          className={`${isMobile ? "w-9 h-9 p-0" : "h-9"}`}
                           size="sm"
                         >
-                          <Heart className="mr-2 h-4 w-4" />
-                          Save
+                          <Heart className={`h-4 w-4 ${!isMobile && "mr-2"}`} />
+                          {!isMobile && "Save"}
                         </Button>
                         <Button
                           onClick={generatePin}
-                          className="h-9"
+                          className={`${isMobile ? "w-9 h-9 p-0" : "h-9"}`}
                           size="sm"
                         >
-                          <RefreshCw className="mr-2 h-4 w-4" />
-                          Generate
+                          <RefreshCw className={`h-4 w-4 ${!isMobile && "mr-2"}`} />
+                          {!isMobile && "Generate"}
                         </Button>
                       </div>
                     </div>

@@ -22,7 +22,7 @@ const ResponsiveIconButton: React.FC<ResponsiveIconButtonProps> = ({
     <Button
       className={cn(
         "transition-all",
-        isMobile ? "px-2 h-9 min-w-9" : "h-9",
+        isMobile ? "w-9 h-9 p-0" : "h-9",
         className
       )}
       {...props}

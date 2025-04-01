@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Dialog,
@@ -10,12 +9,15 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ActivityIcon, CheckIcon, XIcon } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PasswordStrengthAnalyzerProps {
   password: string;
 }
 
 const PasswordStrengthAnalyzer: React.FC<PasswordStrengthAnalyzerProps> = ({ password }) => {
+  const isMobile = useIsMobile();
+  
   const getPasswordStrength = () => {
     if (!password) return "weak";
     
@@ -55,16 +57,14 @@ const PasswordStrengthAnalyzer: React.FC<PasswordStrengthAnalyzerProps> = ({ pas
     }
   };
 
-  // Password criteria checks
   const hasMinLength = password.length >= 12;
   const hasLowercase = /[a-z]/.test(password);
   const hasUppercase = /[A-Z]/.test(password);
   const hasNumber = /[0-9]/.test(password);
   const hasSymbol = /[^a-zA-Z0-9]/.test(password);
-  const hasNoRepeatingChars = !/(.)\1\1/.test(password); // No character repeated 3+ times
+  const hasNoRepeatingChars = !/(.)\1\1/.test(password);
   const hasNoCommonPatterns = !/^(?:123456|password|qwerty)/i.test(password);
   
-  // Calculate time to crack (very simplified estimate)
   const getTimeToCrack = () => {
     if (!password) return "Instantly";
     
@@ -75,7 +75,7 @@ const PasswordStrengthAnalyzer: React.FC<PasswordStrengthAnalyzerProps> = ({ pas
       (hasSymbol ? 33 : 0);
     
     const combinations = Math.pow(charsetSize, password.length);
-    const attemptsPerSecond = 1000000000; // 1 billion attempts per second (modern hardware)
+    const attemptsPerSecond = 1000000000;
     const seconds = combinations / attemptsPerSecond;
     
     if (seconds < 1) return "Instantly";
@@ -91,9 +91,9 @@ const PasswordStrengthAnalyzer: React.FC<PasswordStrengthAnalyzerProps> = ({ pas
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="h-9">
-          <ActivityIcon className="h-4 w-4 mr-2" />
-          Analyze Strength
+        <Button variant="outline" size="sm" className={`h-9 ${isMobile ? "w-9 p-0" : ""}`}>
+          <ActivityIcon className={`h-4 w-4 ${!isMobile && "mr-2"}`} />
+          {!isMobile && "Analyze Strength"}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md bg-card">

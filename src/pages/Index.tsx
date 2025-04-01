@@ -25,7 +25,7 @@ const Index = () => {
       <Preloader />
       <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
         <header className="border-b border-border sticky top-0 backdrop-blur-sm bg-background/80 z-10">
-          <div className="container mx-auto py-3 px-3 sm:py-4 sm:px-4 flex justify-between items-center">
+          <div className="container mx-auto py-2 px-3 sm:py-4 sm:px-4 flex justify-between items-center">
             <div className="flex items-center gap-1 sm:gap-2">
               <img 
                 src={isDark ? "/favicon.png" : "/favicon-dark.png"} 
@@ -45,11 +45,11 @@ const Index = () => {
           </div>
         </header>
 
-        <main className="container mx-auto pt-4 pb-8 px-3 sm:py-8 sm:px-4">
+        <main className="container mx-auto pt-3 pb-6 px-3 sm:py-8 sm:px-4">
           <PasswordGenerator />
         </main>
 
-        <footer className="py-4 sm:py-6 border-t border-border mt-4 sm:mt-8">
+        <footer className="py-3 sm:py-6 border-t border-border mt-4 sm:mt-8">
           <div className="container mx-auto px-3 sm:px-4 text-center text-xs sm:text-sm text-muted-foreground">
             <p>
               © 2025 CyberKeyGen. {!isMobile && "Designed & Developed by "}
